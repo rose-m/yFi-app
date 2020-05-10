@@ -14,7 +14,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     let statusItem = NSStatusBar.system.statusItem(withLength: 70)
     
-    var wifiManager: WiFiManager!
+    var wifiManager: WifiController!
     var popover: NSPopover!
     var updateTxRateTimer: Timer?
 
@@ -22,7 +22,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         // We do not create a window here
         NSApp.setActivationPolicy(.accessory)
         
-        wifiManager = WiFiManager()
+        wifiManager = WifiController()
         initStatusItem()
         popover = createPopover()
         updateTxRateTimer = scheduleUpdateTxRateTimer()
