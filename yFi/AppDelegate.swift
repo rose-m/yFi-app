@@ -19,7 +19,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     var wifiManager: WifiController!
     var popover: NSPopover!
     var updateTxRateTimer: Timer?
+    
     var cancelShowTxRate: AnyCancellable?
+    var cancelRateLimit: AnyCancellable?
     
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         // We do not create a window here
@@ -35,6 +37,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 self?.updateStatusItem(showTxRate)
             }
         }
+        cancelRateLimit = settings.$rateLimit.sink { [weak self] rateLimit in
+            print("rateLimit: \(rateLimit)")
+        }
     }
     
     func applicationWillTerminate(_ aNotification: Notification) {
@@ -44,6 +49,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             updateTxRateTimer = nil
         }
         if let c = cancelShowTxRate {
+            c.cancel()
+        }
+        if let c = cancelRateLimit {
             c.cancel()
         }
     }

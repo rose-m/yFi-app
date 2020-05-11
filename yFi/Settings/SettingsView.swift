@@ -12,14 +12,36 @@ struct SettingsView: View {
     
     @ObservedObject var model: SettingsModel
     
+    @State var dummy = "notify"
+    
+    let rateFormater = NumberFormatter()
+    
     var body: some View {
-        HStack {
-            VStack(alignment: .leading) {
+        VStack(alignment: .leading) {
+            HStack(alignment: .center) {
                 Toggle("Show TX Rate", isOn: $model.showTxRate)
                 Spacer()
-            }
+            }.padding([.top])
+            
+            HStack(alignment: .center) {
+                Text("Limit:")
+                TextField("Limit", value: $model.rateLimit, formatter: rateFormater)
+                    .multilineTextAlignment(.trailing)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                Spacer()
+            }.padding([.top])
+            
+            Text("If the TX rate drops below the limit, we will take action.")
+                .foregroundColor(.secondary)
+                .frame(height: 40)
+            
+            Picker(selection: $dummy, label: Text("Action:")) {
+                Text("Notify").tag("notify")
+                Text("Reconnect").tag("reconnect")
+            }.pickerStyle(SegmentedPickerStyle())
+            
             Spacer()
-        }.frame(width: 200, height: 150).padding()
+        }.frame(width: 200, height: 175).padding([.horizontal])
     }
     
 }

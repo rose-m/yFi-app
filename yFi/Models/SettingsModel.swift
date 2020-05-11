@@ -13,4 +13,6 @@ class SettingsModel : ObservableObject {
     
     @Published var showTxRate: Bool = true
     
+    @Published var rateLimit: Int = 0
+    
 }
