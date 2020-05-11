@@ -8,16 +8,19 @@
 
 import Cocoa
 import SwiftUI
+import Combine
 
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
     
     let statusItem = NSStatusBar.system.statusItem(withLength: 70)
+    let settings = SettingsModel()
     
     var wifiManager: WifiController!
     var popover: NSPopover!
     var updateTxRateTimer: Timer?
-
+    var cancelShowTxRate: AnyCancellable?
+    
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         // We do not create a window here
         NSApp.setActivationPolicy(.accessory)
@@ -26,16 +29,25 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         initStatusItem()
         popover = createPopover()
         updateTxRateTimer = scheduleUpdateTxRateTimer()
+        
+        cancelShowTxRate = settings.$showTxRate.sink { [weak self] showTxRate in
+            DispatchQueue.main.async {
+                self?.updateStatusItem(showTxRate)
+            }
+        }
     }
-
+    
     func applicationWillTerminate(_ aNotification: Notification) {
         // Insert code here to tear down your application
         if let t = updateTxRateTimer {
             t.invalidate()
             updateTxRateTimer = nil
         }
+        if let c = cancelShowTxRate {
+            c.cancel()
+        }
     }
-
+    
     @objc func showSettings(_ sender: Any) {
         if let button = self.statusItem.button {
             popover.show(relativeTo: button.bounds, of: button, preferredEdge: .minY)
@@ -55,7 +67,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     private func createPopover() -> NSPopover {
-        let settingsView = SettingsView()
+        let settingsView = SettingsView(model: settings)
         let popover = NSPopover()
         popover.behavior = .transient
         popover.contentSize = NSSize(width: 300, height: 100)
@@ -65,13 +77,26 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     private func scheduleUpdateTxRateTimer() -> Timer {
         return Timer.scheduledTimer(withTimeInterval: 2, repeats: true, block: { [weak self] (t) in
-            self?.updateStatusItem()
+            if let s = self {
+                s.updateStatusItem(s.settings.showTxRate)
+            }
         })
     }
     
-    private func updateStatusItem() {
-        let rate = wifiManager.currentTxRate()
-        let content = String(format: "%.0f", rate)
-        statusItem.button?.title = content
+    private func updateStatusItem(_ showTxRate: Bool) {
+        if showTxRate {
+            let rate = wifiManager.currentTxRate()
+            let content = String(format: "%.0f", rate)
+            
+            statusItem.length = 70
+            if let button = statusItem.button {
+                button.title = content
+                button.imagePosition = .imageLeft
+            }
+        } else if let button = statusItem.button {
+            statusItem.length = NSStatusItem.squareLength
+            button.title = ""
+            button.imagePosition = .imageOnly
+        }
     }
 }
