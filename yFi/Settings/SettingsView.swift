@@ -12,8 +12,6 @@ struct SettingsView: View {
     
     @ObservedObject var model: SettingsModel
     
-    @State var dummy = "notify"
-    
     let rateFormater = NumberFormatter()
     
     var body: some View {
@@ -35,9 +33,9 @@ struct SettingsView: View {
                 .foregroundColor(.secondary)
                 .frame(height: 40)
             
-            Picker(selection: $dummy, label: Text("Action:")) {
-                Text("Notify").tag("notify")
-                Text("Reconnect").tag("reconnect")
+            Picker(selection: $model.lowRateAction, label: Text("Action:")) {
+                Text("Notify").tag(LowRateAction.notify)
+                Text("Reconnect").tag(LowRateAction.reconnect)
             }.pickerStyle(SegmentedPickerStyle())
             
             Spacer()

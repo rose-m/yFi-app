@@ -9,10 +9,17 @@
 import Foundation
 import Combine
 
+enum LowRateAction {
+    case notify
+    case reconnect
+}
+
 class SettingsModel : ObservableObject {
     
     @Published var showTxRate: Bool = true
     
     @Published var rateLimit: Int = 0
+    
+    @Published var lowRateAction: LowRateAction = .reconnect
     
 }
