@@ -98,7 +98,7 @@ class StatusItemController {
     private func initAlertPopover() {
         let alertView = AlertView()
         alertPopover.behavior = .transient
-        alertPopover.contentSize = NSSize(width: 120, height: 30)
+        alertPopover.contentSize = NSSize(width: 160, height: 30)
         alertPopover.appearance = NSAppearance(named: NSAppearance.Name.vibrantDark)
         alertPopover.contentViewController = NSHostingController(rootView: alertView)
     }
