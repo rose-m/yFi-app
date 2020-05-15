@@ -31,7 +31,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         statusItemController = StatusItemController(settings)
         wifiManager = WifiController()
         alertingController = AlertingController({ [weak self] alert in
-            self?.statusItemController.setAlert(alert)
+            self?.statusItemController.setAlert(alert == .alert)
         })
         alertingController.updateLimit(settings.rateLimit)
         

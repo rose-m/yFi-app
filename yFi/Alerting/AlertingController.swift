@@ -8,13 +8,24 @@
 
 import Foundation
 
+enum AlertLevel {
+    case clear
+    case alert
+}
+
 class AlertingController {
     
-    private let trigger: (Bool) -> Void
+    private static let NUM_VIOLATIONS = 2
+    private static let NUM_ABOVE_TO_CLEAR = 3
+    
+    private let trigger: (AlertLevel) -> Void
     private var limit: Int?
     private var value: Double?
     
-    init(_ trigger: @escaping (Bool) -> Void) {
+    private var level = AlertLevel.clear
+    private var levelCount = 0
+    
+    init(_ trigger: @escaping (AlertLevel) -> Void) {
         self.trigger = trigger
     }
     
@@ -31,11 +42,48 @@ class AlertingController {
     private func checkLimit(_ reactImmediately: Bool) {
         if let limit = self.limit, let value = self.value {
             if (value > 0 && value < Double(limit)) {
-                self.trigger(true)
+                limitViolated(reactImmediately)
             } else {
-                self.trigger(false)
+                limitSatisfied(reactImmediately)
             }
         }
     }
     
+    private func limitViolated(_ reactImmediately: Bool) {
+        if (level == .alert) {
+            levelCount = 0
+        } else {
+            if (levelCount < AlertingController.NUM_VIOLATIONS) {
+                levelCount += 1
+            }
+            
+            if (levelCount == AlertingController.NUM_VIOLATIONS) {
+                level = .alert
+                levelCount = 0
+            }
+        }
+        
+        trigger(level)
+    }
+    
+    private func limitSatisfied(_ reactImmediately: Bool) {
+        if (reactImmediately) {
+            level = .clear
+            levelCount = 0
+        } else if (level == .clear) {
+            levelCount = 0
+        } else {
+            if (levelCount < AlertingController.NUM_ABOVE_TO_CLEAR) {
+                levelCount += 1
+            }
+            
+            if (levelCount == AlertingController.NUM_ABOVE_TO_CLEAR) {
+                level = .clear
+                trigger(level)
+                levelCount = 0
+            }
+        }
+        
+        trigger(level)
+    }
 }
