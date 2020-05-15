@@ -112,13 +112,13 @@
 				5A503D49246DAF280070F194 /* Status Item */,
 				5A503D46246DA4B40070F194 /* Alerting */,
 				5A6C0E49246831680021828A /* Settings */,
+				5AFD17CA246EDCD600899DA3 /* WiFi */,
 				5A2AF7142466E492007AAE5D /* AppDelegate.swift */,
 				5A2AF7182466E495007AAE5D /* Assets.xcassets */,
 				5A2AF71D2466E495007AAE5D /* Main.storyboard */,
 				5A2AF7202466E495007AAE5D /* Info.plist */,
 				5A2AF7212466E495007AAE5D /* yFi.entitlements */,
 				5A2AF71A2466E495007AAE5D /* Preview Content */,
-				5AC4E64E2466EF47004E7E1A /* WifiController.swift */,
 			);
 			path = yFi;
 			sourceTree = "<group>";
@@ -173,6 +173,14 @@
 				5A2AF7162466E492007AAE5D /* SettingsView.swift */,
 			);
 			path = Settings;
+			sourceTree = "<group>";
+		};
+		5AFD17CA246EDCD600899DA3 /* WiFi */ = {
+			isa = PBXGroup;
+			children = (
+				5AC4E64E2466EF47004E7E1A /* WifiController.swift */,
+			);
+			path = WiFi;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

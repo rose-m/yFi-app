@@ -69,6 +69,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     private func onAlertLevel(_ level: AlertLevel) {
+        if (level != .alert) {
+            self.wifiManager.cancelReconnect()
+        }
+        
         if (self.settings.lowRateAction == .ignore) {
             self.statusItemController.setAlert(false)
             return
@@ -77,7 +81,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         self.statusItemController.setAlert(level == .alert)
         
         if (self.settings.lowRateAction == .reconnect && level == .alert) {
-            print("Reconnecting...")
+            self.wifiManager.triggerReconnect()
         }
     }
 }
