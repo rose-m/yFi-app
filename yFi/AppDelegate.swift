@@ -30,9 +30,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         
         statusItemController = StatusItemController(settings)
         wifiManager = WifiController()
-        alertingController = AlertingController({ [weak self] alert in
-            self?.statusItemController.setAlert(alert == .alert)
-        })
+        alertingController = AlertingController(self.onAlertLevel(_:))
         alertingController.updateLimit(settings.rateLimit)
         
         updateTxRateTimer = scheduleUpdateTxRateTimer()
@@ -68,5 +66,18 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 s.statusItemController.updateTxRate(rate)
             }
         })
+    }
+    
+    private func onAlertLevel(_ level: AlertLevel) {
+        if (self.settings.lowRateAction == .ignore) {
+            self.statusItemController.setAlert(false)
+            return
+        }
+        
+        self.statusItemController.setAlert(level == .alert)
+        
+        if (self.settings.lowRateAction == .reconnect && level == .alert) {
+            print("Reconnecting...")
+        }
     }
 }

@@ -33,13 +33,14 @@ struct SettingsView: View {
                 .foregroundColor(.secondary)
                 .frame(height: 40)
             
-            Picker(selection: $model.lowRateAction, label: Text("Action:")) {
+            Picker("Action:", selection: $model.lowRateAction) {
                 Text("Notify").tag(LowRateAction.notify)
                 Text("Reconnect").tag(LowRateAction.reconnect)
+                Text("Ignore").tag(LowRateAction.ignore)
             }.pickerStyle(SegmentedPickerStyle())
             
             Spacer()
-        }.frame(width: 200, height: 175).padding([.horizontal])
+        }.frame(maxWidth: .infinity, maxHeight: .infinity).padding([.horizontal])
     }
     
 }

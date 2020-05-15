@@ -12,6 +12,7 @@ import Combine
 enum LowRateAction {
     case notify
     case reconnect
+    case ignore
 }
 
 class SettingsModel : ObservableObject {
