@@ -486,9 +486,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = yFi/yFi.entitlements;
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"yFi/Preview Content\"";
+				DEVELOPMENT_TEAM = BST2VL3LCN;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = yFi/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -507,9 +509,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = yFi/yFi.entitlements;
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"yFi/Preview Content\"";
+				DEVELOPMENT_TEAM = BST2VL3LCN;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = yFi/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (

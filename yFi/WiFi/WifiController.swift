@@ -45,6 +45,19 @@ class WifiController {
     }
     
     private func reconnect(_ timer: Timer) {
-        print("Reconnecting...")
+        do {
+            try iface.setPower(false)
+            print("Set power to false")
+            Timer.scheduledTimer(withTimeInterval: 1.0, repeats: false) { [weak self] _ in
+                do {
+                    try self?.iface.setPower(true)
+                    print("Set power to true")
+                } catch {
+                    print("Failed", error)
+                }
+            }
+        } catch {
+            print("Failed", error)
+        }
     }
 }
