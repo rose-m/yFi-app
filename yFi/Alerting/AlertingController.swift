@@ -24,12 +24,12 @@ class AlertingController : ObservableObject {
     private let _state$ = CurrentValueSubject<State, Never>(.clear)
     private let wifi: WifiController
     
-    private var tickTimer$: Timer.TimerPublisher!
-    private var limitViolatedCancellable: AnyCancellable!
-    private var violationCounter = 0
-    
     private var lowRateAction: LowRateAction = .notify
     private var rateLimit: Int = 0
+    
+    private var violationCounter = 0
+    
+    private var tickCancellable: AnyCancellable?
     private var settingsCancellable: AnyCancellable?
     
     init(_ wifiController: WifiController, _ settings: SettingsModel) {
@@ -37,22 +37,31 @@ class AlertingController : ObservableObject {
         
         wifi = wifiController
         
-        tickTimer$ = initTimer()
-        limitViolatedCancellable = tickTimer$
-            .map { (date: Date) in self.wifi.currentTxRate() }
-            .filter { r in r != 0}
-            .map { r in r < Double(self.rateLimit) }
-            .sink { v in self.onViolation(v) }
+        tickCancellable = wifi.rate$.sink(receiveValue: onTickRate)
         
         settingsCancellable = initSettings(settings)
     }
     
-    private func onViolation(_ violated: Bool) -> Void {
+    func shutdown() -> Void {
+        if let c = tickCancellable {
+            c.cancel()
+            tickCancellable = nil
+        }
+        if let c = settingsCancellable {
+            c.cancel()
+            settingsCancellable = nil
+        }
+    }
+    
+    private func onTickRate(_ txRate: Double) -> Void {
         var state: State?
-        if (lowRateAction == .ignore) {
+        
+        if (lowRateAction == .ignore || txRate == 0) {
             violationCounter = 0
             state = .clear
         } else {
+            let violated = txRate < Double(rateLimit)
+            
             switch self._state$.value {
             case .clear:
                 violationCounter = violated ? violationCounter + 1 : 0
@@ -67,15 +76,21 @@ class AlertingController : ObservableObject {
                 if (violationCounter >= 2) {
                     violationCounter = 0
                     state = .clear
+                } else if (lowRateAction == .reconnect) {
+                    violationCounter = 0
+                    state = .reconnecting
                 } else {
                     state = .alert
                 }
             case .reconnecting:
-                state = .reconnecting
-                wifi.triggerReconnect() {
-                    self.violationCounter = 0
-                    self._state$.send(.reconnected)
+                violationCounter += 1
+                if (violationCounter == 2) {
+                    wifi.triggerReconnect(do: { (success) in
+                        self.violationCounter = 0
+                        self._state$.send(success ? .reconnected : .failed)
+                    })
                 }
+                state = .reconnecting
             case .reconnected:
                 if (violated) {
                     state = .failed
@@ -105,13 +120,13 @@ class AlertingController : ObservableObject {
         }
     }
     
-    private func initTimer() -> Timer.TimerPublisher {
-        return Timer.TimerPublisher(interval: 2, runLoop: .main, mode: .default)
-    }
-    
     private func initSettings(_ settings: SettingsModel) -> AnyCancellable {
         let lowRateCancellable = settings.$lowRateAction.sink { (action) in
             self.lowRateAction = action
+            if (self.lowRateAction == .ignore) {
+                self._state$.send(.clear)
+                self.violationCounter = 0
+            }
         }
         let rateLimitCancellable = settings.$rateLimit.sink { (limit) in
             self.rateLimit = limit

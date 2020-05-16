@@ -19,10 +19,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     var wifiManager: WifiController!
     var alertingController: AlertingController!
     
-    var updateTxRateTimer: Timer?
-    
     var cancelShowTxRate: AnyCancellable?
-    var cancelRateLimit: AnyCancellable?
     
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         // We do not create a window here
@@ -30,58 +27,20 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         
         statusItemController = StatusItemController(settings)
         wifiManager = WifiController()
-        alertingController = AlertingController(self.onAlertLevel(_:))
-        alertingController.updateLimit(settings.rateLimit)
         
-        updateTxRateTimer = scheduleUpdateTxRateTimer()
-        
+        alertingController = AlertingController(wifiManager, settings)
+                
         cancelShowTxRate = settings.$showTxRate.sink { [weak self] showTxRate in
             DispatchQueue.main.async {
                 self?.statusItemController.updateShowTxRate(showTxRate)
             }
         }
-        cancelRateLimit = settings.$rateLimit.sink { [weak self] rateLimit in
-            self?.alertingController.updateLimit(rateLimit)
-        }
     }
     
     func applicationWillTerminate(_ aNotification: Notification) {
-        if let t = updateTxRateTimer {
-            t.invalidate()
-            updateTxRateTimer = nil
-        }
         if let c = cancelShowTxRate {
             c.cancel()
-        }
-        if let c = cancelRateLimit {
-            c.cancel()
-        }
-    }
-    
-    private func scheduleUpdateTxRateTimer() -> Timer {
-        return Timer.scheduledTimer(withTimeInterval: 2, repeats: true, block: { [weak self] (t) in
-            if let s = self {
-                let rate = s.wifiManager.currentTxRate()
-                s.alertingController.updateValue(rate)
-                s.statusItemController.updateTxRate(rate)
-            }
-        })
-    }
-    
-    private func onAlertLevel(_ level: AlertLevel) {
-        if (level != .alert) {
-            self.wifiManager.cancelReconnect()
-        }
-        
-        if (self.settings.lowRateAction == .ignore) {
-            self.statusItemController.setAlert(false)
-            return
-        }
-        
-        self.statusItemController.setAlert(level == .alert)
-        
-        if (self.settings.lowRateAction == .reconnect && level == .alert) {
-            self.wifiManager.triggerReconnect()
+            cancelShowTxRate = nil
         }
     }
 }
