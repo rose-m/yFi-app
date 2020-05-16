@@ -17,7 +17,6 @@ class WifiController {
     private let iface: CWInterface!
     
     private var reconnecting = false
-    private var c: AnyCancellable?
     
     init() {
         client = CWWiFiClient.shared()
@@ -35,19 +34,10 @@ class WifiController {
     }
     
     func triggerReconnect(whenReconnected: @escaping (Bool) -> Void) {
-        /*
         if (reconnecting) {
             return
         }
         reconnecting = true
-        
-        print("reconnecting...")
-        Timer.scheduledTimer(withTimeInterval: 1.0, repeats: false) { [weak self] _ in
-            print("connected!")
-            self?.reconnecting = false
-            whenReconnected(true)
-        }
-        */
      
         do {
             try iface.setPower(false)
