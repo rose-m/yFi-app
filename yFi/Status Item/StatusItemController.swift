@@ -25,14 +25,17 @@ class StatusItemController {
     private var cancelSubscriptions: AnyCancellable?
     
     init(settings: SettingsModel,
-         withRate currentRate$: AnyPublisher<Double, Never>) {
+         withRate currentRate$: AnyPublisher<Double, Never>,
+         currentState state$: AnyPublisher<AlertingController.State, Never>) {
         self.settings = settings
         
         let cancelShowTxRate = settings.$showTxRate.sink(receiveValue: onShowTxRateChange)
         let cancelRate = currentRate$.sink(receiveValue: onRateChange)
+        let cancelState = state$.sink(receiveValue: onStateChange)
         cancelSubscriptions = AnyCancellable({
             cancelShowTxRate.cancel()
             cancelRate.cancel()
+            cancelState.cancel()
         })
         
         if let button = statusItem.button {
@@ -41,48 +44,6 @@ class StatusItemController {
         
         initSettingsPopover()
         initAlertPopover()
-    }
-    
-    private func onShowTxRateChange(_ showTxRate: Bool) {
-        self.showTxRate = showTxRate
-        updateDisplay()
-    }
-    
-    private func onRateChange(_ txRate: Double) {
-        self.txRate = txRate
-        updateDisplay()
-    }
-    
-    private func setAlert(_ alert: Bool) {
-        if (settingsPopover.isShown) {
-            return
-        }
-        
-        if (alert && !alertPopover.isShown) {
-            if let button = self.statusItem.button {
-                alertPopover.show(relativeTo: button.bounds, of: button, preferredEdge: .minY)
-            }
-        } else if (!alert && alertPopover.isShown) {
-            alertPopover.close()
-        }
-    }
-    
-    private func updateDisplay() {
-        DispatchQueue.main.async {
-            if self.showTxRate {
-                let content = String(format: "%.0f", self.txRate)
-                
-                self.statusItem.length = 70
-                if let button = self.statusItem.button {
-                    button.title = content
-                    button.imagePosition = .imageLeft
-                }
-            } else if let button = self.statusItem.button {
-                self.statusItem.length = NSStatusItem.squareLength
-                button.title = ""
-                button.imagePosition = .imageOnly
-            }
-        }
     }
     
     @objc func showSettings(_ sender: Any) {
@@ -114,5 +75,48 @@ class StatusItemController {
         alertPopover.contentSize = NSSize(width: 160, height: 30)
         alertPopover.appearance = NSAppearance(named: NSAppearance.Name.vibrantDark)
         alertPopover.contentViewController = NSHostingController(rootView: alertView)
+    }
+    
+    private func onShowTxRateChange(_ showTxRate: Bool) {
+        self.showTxRate = showTxRate
+        updateDisplay()
+    }
+    
+    private func onRateChange(_ txRate: Double) {
+        self.txRate = txRate
+        updateDisplay()
+    }
+    
+    private func onStateChange(_ state: AlertingController.State) {
+        switch state {
+        case .alert, .reconnecting, .reconnected, .failed:
+            if (!alertPopover.isShown && !settingsPopover.isShown) {
+                if let button = self.statusItem.button {
+                    alertPopover.show(relativeTo: button.bounds, of: button, preferredEdge: .minY)
+                }
+            }
+        default:
+            if (alertPopover.isShown) {
+                alertPopover.close()
+            }
+        }
+    }
+    
+    private func updateDisplay() {
+        DispatchQueue.main.async {
+            if self.showTxRate {
+                let content = String(format: "%.0f", self.txRate)
+                
+                self.statusItem.length = 70
+                if let button = self.statusItem.button {
+                    button.title = content
+                    button.imagePosition = .imageLeft
+                }
+            } else if let button = self.statusItem.button {
+                self.statusItem.length = NSStatusItem.squareLength
+                button.title = ""
+                button.imagePosition = .imageOnly
+            }
+        }
     }
 }

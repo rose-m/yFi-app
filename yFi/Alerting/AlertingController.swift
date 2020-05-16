@@ -58,16 +58,21 @@ class AlertingController : ObservableObject {
     }
     
     private func onTickRate(_ txRate: Double) -> Void {
-        print("onTickRate: \(txRate)")
+        let currentState = _state$.value
         var state: State?
         
-        if (lowRateAction == .ignore || txRate == 0) {
+        if (lowRateAction == .ignore) {
             violationCounter = 0
             state = .clear
+        } else if (txRate == 0) {
+            if (currentState == .reconnecting || currentState == .reconnected) {
+                violationCounter = 0
+            }
+            state = currentState
         } else {
             let violated = txRate < Double(rateLimit)
             
-            switch self._state$.value {
+            switch currentState {
             case .clear:
                 violationCounter = violated ? violationCounter + 1 : 0
                 if (violationCounter >= 2) {

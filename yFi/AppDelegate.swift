@@ -19,18 +19,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     var wifiManager: WifiController!
     var alertingController: AlertingController!
     
-    var stateCancellable: AnyCancellable?
-    
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         // We do not create a window here
         NSApp.setActivationPolicy(.accessory)
         
         wifiManager = WifiController()
-        
-        statusItemController = StatusItemController(
-            settings: settings,
-            withRate: wifiManager.rate$
-        )
         
         alertingController = AlertingController(
             currentRate: wifiManager.rate$,
@@ -38,9 +31,12 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             withLimit: settings.$rateLimit.eraseToAnyPublisher(),
             andAction: settings.$lowRateAction.eraseToAnyPublisher()
         )
-        stateCancellable = alertingController.state$.sink { state in
-            print("Got state: \(state)")
-        }
+        
+        statusItemController = StatusItemController(
+            settings: settings,
+            withRate: wifiManager.rate$,
+            currentState: alertingController.state$
+        )
     }
     
     func applicationWillTerminate(_ aNotification: Notification) {

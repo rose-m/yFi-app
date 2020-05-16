@@ -35,6 +35,7 @@ class WifiController {
     }
     
     func triggerReconnect(whenReconnected: @escaping (Bool) -> Void) {
+        /*
         if (reconnecting) {
             return
         }
@@ -46,8 +47,8 @@ class WifiController {
             self?.reconnecting = false
             whenReconnected(true)
         }
+        */
      
-        /*
         do {
             try iface.setPower(false)
             print("Set power to false")
@@ -68,6 +69,5 @@ class WifiController {
             reconnecting = false
             whenReconnected(false)
         }
-        */
     }
 }
