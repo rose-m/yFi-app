@@ -19,7 +19,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     var wifiManager: WifiController!
     var alertingController: AlertingController!
     
+    var stateCancellable: AnyCancellable?
     var cancelShowTxRate: AnyCancellable?
+    
+    var c: AnyCancellable?
     
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         // We do not create a window here
@@ -29,6 +32,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         wifiManager = WifiController()
         
         alertingController = AlertingController(wifiManager, settings)
+        stateCancellable = alertingController.state$.sink { state in
+            print("Got state: \(state)")
+        }
                 
         cancelShowTxRate = settings.$showTxRate.sink { [weak self] showTxRate in
             DispatchQueue.main.async {

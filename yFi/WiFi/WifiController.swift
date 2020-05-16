@@ -17,6 +17,7 @@ class WifiController {
     private let iface: CWInterface!
     
     private var reconnecting = false
+    private var c: AnyCancellable?
     
     init() {
         client = CWWiFiClient.shared()
@@ -27,6 +28,7 @@ class WifiController {
         self.iface = iface
         
         rate$ = Timer.TimerPublisher(interval: 2, runLoop: .main, mode: .default)
+            .autoconnect()
             .map({ (_: Date) in iface.transmitRate() })
             .share()
             .eraseToAnyPublisher()
@@ -37,7 +39,15 @@ class WifiController {
             return
         }
         reconnecting = true
+        
+        print("reconnecting...")
+        Timer.scheduledTimer(withTimeInterval: 1.0, repeats: false) { [weak self] _ in
+            print("connected!")
+            self?.reconnecting = false
+            whenReconnected(true)
+        }
      
+        /*
         do {
             try iface.setPower(false)
             print("Set power to false")
@@ -58,5 +68,6 @@ class WifiController {
             reconnecting = false
             whenReconnected(false)
         }
+        */
     }
 }

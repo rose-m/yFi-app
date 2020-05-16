@@ -54,6 +54,7 @@ class AlertingController : ObservableObject {
     }
     
     private func onTickRate(_ txRate: Double) -> Void {
+        print("onTickRate: \(txRate)")
         var state: State?
         
         if (lowRateAction == .ignore || txRate == 0) {
