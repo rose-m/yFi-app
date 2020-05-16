@@ -40,6 +40,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		5A1C40FD246FCE240042D269 /* Documentation */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Documentation; path = yFi/Documentation; sourceTree = "<group>"; };
 		5A2AF7112466E492007AAE5D /* yFi.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = yFi.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5A2AF7142466E492007AAE5D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5A2AF7162466E492007AAE5D /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
@@ -89,6 +90,7 @@
 		5A2AF7082466E492007AAE5D = {
 			isa = PBXGroup;
 			children = (
+				5A1C40FD246FCE240042D269 /* Documentation */,
 				5A2AF7132466E492007AAE5D /* yFi */,
 				5A2AF7292466E495007AAE5D /* yFiTests */,
 				5A2AF7342466E495007AAE5D /* yFiUITests */,
