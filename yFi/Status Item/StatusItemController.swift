@@ -14,8 +14,13 @@ import SwiftUI
 class StatusItemController {
     
     private let statusItem = NSStatusBar.system.statusItem(withLength: 70)
+    
     private let settingsPopover = NSPopover()
+    private var settingsView: SettingsView!
+    
     private let alertPopover = NSPopover()
+    private let alertViewModel = AlertViewModel()
+    private var alertView: AlertView!
     
     private let settings: SettingsModel!
     
@@ -26,12 +31,14 @@ class StatusItemController {
     
     init(settings: SettingsModel,
          withRate currentRate$: AnyPublisher<Double, Never>,
-         currentState state$: AnyPublisher<AlertingController.State, Never>) {
+         currentState state$: AnyPublisher<AlertState, Never>) {
         self.settings = settings
         
         let cancelShowTxRate = settings.$showTxRate.sink(receiveValue: onShowTxRateChange)
         let cancelRate = currentRate$.sink(receiveValue: onRateChange)
-        let cancelState = state$.sink(receiveValue: onStateChange)
+        let cancelState = state$.sink { state in
+            DispatchQueue.main.async { self.onStateChange(state) }
+        }
         cancelSubscriptions = AnyCancellable({
             cancelShowTxRate.cancel()
             cancelRate.cancel()
@@ -63,14 +70,14 @@ class StatusItemController {
     }
     
     private func initSettingsPopover() {
-        let settingsView = SettingsView(model: settings)
+        settingsView = SettingsView(model: settings)
         settingsPopover.behavior = .transient
         settingsPopover.contentSize = NSSize(width: 300, height: 100)
         settingsPopover.contentViewController = NSHostingController(rootView: settingsView)
     }
     
     private func initAlertPopover() {
-        let alertView = AlertView()
+        alertView = AlertView(model: alertViewModel)
         alertPopover.behavior = .transient
         alertPopover.contentSize = NSSize(width: 160, height: 30)
         alertPopover.appearance = NSAppearance(named: NSAppearance.Name.vibrantDark)
@@ -87,9 +94,10 @@ class StatusItemController {
         updateDisplay()
     }
     
-    private func onStateChange(_ state: AlertingController.State) {
+    private func onStateChange(_ state: AlertState) {
         switch state {
         case .alert, .reconnecting, .reconnected, .failed:
+            alertViewModel.state = state
             if (!alertPopover.isShown && !settingsPopover.isShown) {
                 if let button = self.statusItem.button {
                     alertPopover.show(relativeTo: button.bounds, of: button, preferredEdge: .minY)

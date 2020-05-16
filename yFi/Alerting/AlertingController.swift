@@ -13,20 +13,13 @@ typealias OnReconnectCallback = (@escaping (Bool) -> Void) -> Void
 
 class AlertingController : ObservableObject {
     
-    enum State {
-        case clear
-        case alert
-        case reconnecting
-        case reconnected
-        case failed
-    }
-    
-    let state$: AnyPublisher<State, Never>
-    private let _state$ = CurrentValueSubject<State, Never>(.clear)
+    let state$: AnyPublisher<AlertState, Never>
+    private let _state$ = CurrentValueSubject<AlertState, Never>(.clear)
     
     private var lowRateAction: LowRateAction = .notify
     private var rateLimit: Int = 0
     private var violationCounter = 0
+    private var ticksInState = 0
     
     private let onReconnect: OnReconnectCallback;
     
@@ -59,10 +52,11 @@ class AlertingController : ObservableObject {
     
     private func onTickRate(_ txRate: Double) -> Void {
         let currentState = _state$.value
-        var state: State?
+        var state: AlertState?
         
         if (lowRateAction == .ignore) {
             violationCounter = 0
+            ticksInState = 0
             state = .clear
         } else if (txRate == 0) {
             if (currentState == .reconnecting || currentState == .reconnected) {
@@ -77,7 +71,7 @@ class AlertingController : ObservableObject {
                 violationCounter = violated ? violationCounter + 1 : 0
                 if (violationCounter >= 2) {
                     violationCounter = 0
-                    state = lowRateAction == .notify ? .alert : .reconnecting
+                    state = .alert
                 } else {
                     state = .clear
                 }
@@ -86,20 +80,19 @@ class AlertingController : ObservableObject {
                 if (violationCounter >= 2) {
                     violationCounter = 0
                     state = .clear
-                } else if (lowRateAction == .reconnect) {
+                } else if (lowRateAction == .notify) {
+                    state = .alert
+                } else if (ticksInState == 1) {
                     violationCounter = 0
                     state = .reconnecting
                 } else {
                     state = .alert
                 }
             case .reconnecting:
-                violationCounter += 1
-                if (violationCounter == 2) {
-                    onReconnect({ (success) in
-                        self.violationCounter = 0
-                        self._state$.send(success ? .reconnected : .failed)
-                    })
-                }
+                onReconnect({ (success) in
+                    self.violationCounter = 0
+                    self._state$.send(success ? .reconnected : .failed)
+                })
                 state = .reconnecting
             case .reconnected:
                 if (violated) {
@@ -124,6 +117,11 @@ class AlertingController : ObservableObject {
         }
         
         if let s = state {
+            if (s == currentState) {
+                ticksInState += 1
+            } else {
+                ticksInState = 0
+            }
             self._state$.send(s)
         } else {
             print("ERROR: new state was not set")
