@@ -8,6 +8,7 @@
 
 import Cocoa
 import Foundation
+import Combine
 import SwiftUI
 
 class StatusItemController {
@@ -21,8 +22,18 @@ class StatusItemController {
     private var showTxRate = true
     private var txRate = 0.0
     
-    init(_ settings: SettingsModel) {
+    private var cancelSubscriptions: AnyCancellable?
+    
+    init(settings: SettingsModel,
+         withRate currentRate$: AnyPublisher<Double, Never>) {
         self.settings = settings
+        
+        let cancelShowTxRate = settings.$showTxRate.sink(receiveValue: onShowTxRateChange)
+        let cancelRate = currentRate$.sink(receiveValue: onRateChange)
+        cancelSubscriptions = AnyCancellable({
+            cancelShowTxRate.cancel()
+            cancelRate.cancel()
+        })
         
         if let button = statusItem.button {
             initStatusButton(button)
@@ -32,17 +43,17 @@ class StatusItemController {
         initAlertPopover()
     }
     
-    func updateShowTxRate(_ showTxRate: Bool) {
+    private func onShowTxRateChange(_ showTxRate: Bool) {
         self.showTxRate = showTxRate
         updateDisplay()
     }
     
-    func updateTxRate(_ txRate: Double) {
+    private func onRateChange(_ txRate: Double) {
         self.txRate = txRate
         updateDisplay()
     }
     
-    func setAlert(_ alert: Bool) {
+    private func setAlert(_ alert: Bool) {
         if (settingsPopover.isShown) {
             return
         }
@@ -57,18 +68,20 @@ class StatusItemController {
     }
     
     private func updateDisplay() {
-        if showTxRate {
-            let content = String(format: "%.0f", txRate)
-            
-            statusItem.length = 70
-            if let button = statusItem.button {
-                button.title = content
-                button.imagePosition = .imageLeft
+        DispatchQueue.main.async {
+            if self.showTxRate {
+                let content = String(format: "%.0f", self.txRate)
+                
+                self.statusItem.length = 70
+                if let button = self.statusItem.button {
+                    button.title = content
+                    button.imagePosition = .imageLeft
+                }
+            } else if let button = self.statusItem.button {
+                self.statusItem.length = NSStatusItem.squareLength
+                button.title = ""
+                button.imagePosition = .imageOnly
             }
-        } else if let button = statusItem.button {
-            statusItem.length = NSStatusItem.squareLength
-            button.title = ""
-            button.imagePosition = .imageOnly
         }
     }
     

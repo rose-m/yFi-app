@@ -9,6 +9,8 @@
 import Foundation
 import Combine
 
+typealias OnReconnectCallback = (@escaping (Bool) -> Void) -> Void
+
 class AlertingController : ObservableObject {
     
     enum State {
@@ -20,36 +22,38 @@ class AlertingController : ObservableObject {
     }
     
     let state$: AnyPublisher<State, Never>
-    
     private let _state$ = CurrentValueSubject<State, Never>(.clear)
-    private let wifi: WifiController
     
     private var lowRateAction: LowRateAction = .notify
     private var rateLimit: Int = 0
-    
     private var violationCounter = 0
     
-    private var tickCancellable: AnyCancellable?
-    private var settingsCancellable: AnyCancellable?
+    private let onReconnect: OnReconnectCallback;
     
-    init(_ wifiController: WifiController, _ settings: SettingsModel) {
-        state$ = _state$.eraseToAnyPublisher()
+    private var cancelSubscriptions: AnyCancellable?
         
-        wifi = wifiController
+    init(currentRate rate$: AnyPublisher<Double, Never>,
+         toReconnect onReconnect: @escaping OnReconnectCallback,
+         withLimit limit$: AnyPublisher<Int, Never>,
+         andAction action$: AnyPublisher<LowRateAction, Never>) {
+        state$ = _state$.share().eraseToAnyPublisher()
         
-        tickCancellable = wifi.rate$.sink(receiveValue: onTickRate)
+        self.onReconnect = onReconnect
         
-        settingsCancellable = initSettings(settings)
+        let cancelRate = rate$.sink(receiveValue: onTickRate(_:))
+        let cancelLimit = limit$.assign(to: \.rateLimit, on: self)
+        let cancelAction = action$.sink(receiveValue: onLowRateActionChange(_:))
+        cancelSubscriptions = AnyCancellable({
+            cancelRate.cancel()
+            cancelLimit.cancel()
+            cancelAction.cancel()
+        })
     }
     
     func shutdown() -> Void {
-        if let c = tickCancellable {
+        if let c = cancelSubscriptions {
             c.cancel()
-            tickCancellable = nil
-        }
-        if let c = settingsCancellable {
-            c.cancel()
-            settingsCancellable = nil
+            cancelSubscriptions = nil
         }
     }
     
@@ -86,7 +90,7 @@ class AlertingController : ObservableObject {
             case .reconnecting:
                 violationCounter += 1
                 if (violationCounter == 2) {
-                    wifi.triggerReconnect(do: { (success) in
+                    onReconnect({ (success) in
                         self.violationCounter = 0
                         self._state$.send(success ? .reconnected : .failed)
                     })
@@ -121,20 +125,11 @@ class AlertingController : ObservableObject {
         }
     }
     
-    private func initSettings(_ settings: SettingsModel) -> AnyCancellable {
-        let lowRateCancellable = settings.$lowRateAction.sink { (action) in
-            self.lowRateAction = action
-            if (self.lowRateAction == .ignore) {
-                self._state$.send(.clear)
-                self.violationCounter = 0
-            }
-        }
-        let rateLimitCancellable = settings.$rateLimit.sink { (limit) in
-            self.rateLimit = limit
-        }
-        return AnyCancellable {
-            lowRateCancellable.cancel()
-            rateLimitCancellable.cancel()
+    private func onLowRateActionChange(_ action: LowRateAction) -> Void {
+        lowRateAction = action
+        if (lowRateAction == .ignore) {
+            _state$.send(.clear)
+            violationCounter = 0
         }
     }
 }

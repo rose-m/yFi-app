@@ -20,33 +20,30 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     var alertingController: AlertingController!
     
     var stateCancellable: AnyCancellable?
-    var cancelShowTxRate: AnyCancellable?
-    
-    var c: AnyCancellable?
     
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         // We do not create a window here
         NSApp.setActivationPolicy(.accessory)
         
-        statusItemController = StatusItemController(settings)
         wifiManager = WifiController()
         
-        alertingController = AlertingController(wifiManager, settings)
+        statusItemController = StatusItemController(
+            settings: settings,
+            withRate: wifiManager.rate$
+        )
+        
+        alertingController = AlertingController(
+            currentRate: wifiManager.rate$,
+            toReconnect: wifiManager.triggerReconnect,
+            withLimit: settings.$rateLimit.eraseToAnyPublisher(),
+            andAction: settings.$lowRateAction.eraseToAnyPublisher()
+        )
         stateCancellable = alertingController.state$.sink { state in
             print("Got state: \(state)")
-        }
-                
-        cancelShowTxRate = settings.$showTxRate.sink { [weak self] showTxRate in
-            DispatchQueue.main.async {
-                self?.statusItemController.updateShowTxRate(showTxRate)
-            }
         }
     }
     
     func applicationWillTerminate(_ aNotification: Notification) {
-        if let c = cancelShowTxRate {
-            c.cancel()
-            cancelShowTxRate = nil
-        }
     }
+    
 }

@@ -34,7 +34,7 @@ class WifiController {
             .eraseToAnyPublisher()
     }
     
-    func triggerReconnect(do whenReconnected: @escaping (Bool) -> Void) {
+    func triggerReconnect(whenReconnected: @escaping (Bool) -> Void) {
         if (reconnecting) {
             return
         }
