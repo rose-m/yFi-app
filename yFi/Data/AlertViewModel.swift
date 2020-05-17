@@ -11,6 +11,10 @@ import SwiftUI
 
 class AlertViewModel : ObservableObject {
     
+    public static let GREEN_COLOR = Color(red: 127.0 / 255.0, green: 212.0 / 255.0, blue: 0)
+    public static let YELLOW_COLOR = Color(red: 247.0 / 255.0, green: 203.0 / 255.0, blue: 21.0 / 255.0)
+    public static let RED_COLOR = Color(red: 245.0 / 255.0, green: 93.0 / 255.0, blue: 62.0 / 255.0)
+    
     @Published var state: AlertState = .clear
     
     var icon: String {
@@ -34,15 +38,15 @@ class AlertViewModel : ObservableObject {
         get {
             switch state {
             case .clear:
-                return .green
+                return AlertViewModel.GREEN_COLOR
             case .reconnecting:
-                return .yellow
+                return AlertViewModel.YELLOW_COLOR
             case .reconnected:
-                return .green
+                return AlertViewModel.GREEN_COLOR
             case .failed:
-                return .red
+                return AlertViewModel.RED_COLOR
             default:
-                return Color.yellow
+                return AlertViewModel.YELLOW_COLOR
             }
         }
     }
