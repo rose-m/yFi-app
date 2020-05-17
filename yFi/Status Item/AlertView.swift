@@ -10,59 +10,21 @@ import SwiftUI
 import Foundation
 import Combine
 
-class AlertViewModel : ObservableObject {
-    
-    @Published var state: AlertState = .clear
-    
-}
-
 struct AlertView : View {
     
     @ObservedObject var model: AlertViewModel
     
-    private var icon: String {
-        get {
-            switch model.state {
-            case .clear:
-                return "icon-check"
-            case .reconnecting:
-                return "icon-reconnect"
-            case .reconnected:
-                return "icon-check"
-            case .failed:
-                return "icon-failed"
-            default:
-                return "icon-warning"
-            }
-        }
-    }
-    private var color: Color {
-        get {
-            switch model.state {
-            case .clear:
-                return .green
-            case .reconnecting:
-                return .yellow
-            case .reconnected:
-                return .green
-            case .failed:
-                return .red
-            default:
-                return Color.yellow
-            }
-        }
-    }
-    
     var body: some View {
         VStack(alignment: .center) {
             HStack {
-                Image(icon)
+                Image(model.icon)
                     .resizable()
                     .renderingMode(.template)
-                    .foregroundColor(color)
+                    .foregroundColor(model.color)
                     .frame(width: 15, height: 15)
-                Text("Bad WiFi quality...")
-            }
+                Text(model.content)
+                    .frame(maxWidth: .infinity)
+            }.padding([.leading, .trailing])
         }.frame(maxWidth: .infinity, maxHeight: .infinity)
     }
     

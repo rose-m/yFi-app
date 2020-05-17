@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5A0DA2372471623500A1C262 /* AlertViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A0DA2362471623500A1C262 /* AlertViewModelTest.swift */; };
+		5A0DA2392471641C00A1C262 /* AlertViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A0DA2382471641C00A1C262 /* AlertViewModel.swift */; };
 		5A13CF0C24712BE600A19F18 /* AlertingControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A13CF0B24712BE600A19F18 /* AlertingControllerTests.swift */; };
 		5A1C40FF246FD1AD0042D269 /* AlertingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A1C40FE246FD1AD0042D269 /* AlertingController.swift */; };
 		5A1C4101247030DB0042D269 /* AlertState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A1C4100247030DB0042D269 /* AlertState.swift */; };
@@ -22,6 +24,7 @@
 		5AC4E64F2466EF47004E7E1A /* WifiController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AC4E64E2466EF47004E7E1A /* WifiController.swift */; };
 		5AC4E6502466F421004E7E1A /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5A2AF7372466E495007AAE5D /* Info.plist */; };
 		5AF8F06C246DCC2500C2B702 /* AlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF8F06B246DCC2500C2B702 /* AlertView.swift */; };
+		5AFBECA124716B39004C69AA /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5AFBECA024716B39004C69AA /* Localizable.strings */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -42,6 +45,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		5A0DA2362471623500A1C262 /* AlertViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertViewModelTest.swift; sourceTree = "<group>"; };
+		5A0DA2382471641C00A1C262 /* AlertViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertViewModel.swift; sourceTree = "<group>"; };
 		5A13CF0B24712BE600A19F18 /* AlertingControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertingControllerTests.swift; sourceTree = "<group>"; };
 		5A1C40FD246FCE240042D269 /* Documentation */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Documentation; path = yFi/Documentation; sourceTree = "<group>"; };
 		5A1C40FE246FD1AD0042D269 /* AlertingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertingController.swift; sourceTree = "<group>"; };
@@ -64,6 +69,7 @@
 		5A6C0E4A246831BF0021828A /* SettingsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsModel.swift; sourceTree = "<group>"; };
 		5AC4E64E2466EF47004E7E1A /* WifiController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WifiController.swift; sourceTree = "<group>"; };
 		5AF8F06B246DCC2500C2B702 /* AlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertView.swift; sourceTree = "<group>"; };
+		5AFBECA024716B39004C69AA /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -125,6 +131,7 @@
 				5A2AF7202466E495007AAE5D /* Info.plist */,
 				5A2AF7212466E495007AAE5D /* yFi.entitlements */,
 				5A2AF71A2466E495007AAE5D /* Preview Content */,
+				5AFBECA024716B39004C69AA /* Localizable.strings */,
 			);
 			path = yFi;
 			sourceTree = "<group>";
@@ -143,6 +150,7 @@
 				5A2AF72A2466E495007AAE5D /* yFiTests.swift */,
 				5A2AF72C2466E495007AAE5D /* Info.plist */,
 				5A13CF0B24712BE600A19F18 /* AlertingControllerTests.swift */,
+				5A0DA2362471623500A1C262 /* AlertViewModelTest.swift */,
 			);
 			path = yFiTests;
 			sourceTree = "<group>";
@@ -179,6 +187,7 @@
 			children = (
 				5A6C0E4A246831BF0021828A /* SettingsModel.swift */,
 				5A1C4100247030DB0042D269 /* AlertState.swift */,
+				5A0DA2382471641C00A1C262 /* AlertViewModel.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -295,6 +304,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5AFBECA124716B39004C69AA /* Localizable.strings in Resources */,
 				5AC4E6502466F421004E7E1A /* Info.plist in Resources */,
 				5A2AF71F2466E495007AAE5D /* Main.storyboard in Resources */,
 				5A2AF71C2466E495007AAE5D /* Preview Assets.xcassets in Resources */,
@@ -326,6 +336,7 @@
 				5AC4E64F2466EF47004E7E1A /* WifiController.swift in Sources */,
 				5A2AF7172466E492007AAE5D /* SettingsView.swift in Sources */,
 				5A503D4B246DAF380070F194 /* StatusItemController.swift in Sources */,
+				5A0DA2392471641C00A1C262 /* AlertViewModel.swift in Sources */,
 				5AF8F06C246DCC2500C2B702 /* AlertView.swift in Sources */,
 				5A2AF7152466E492007AAE5D /* AppDelegate.swift in Sources */,
 				5A1C4101247030DB0042D269 /* AlertState.swift in Sources */,
@@ -338,6 +349,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5A0DA2372471623500A1C262 /* AlertViewModelTest.swift in Sources */,
 				5A2AF72B2466E495007AAE5D /* yFiTests.swift in Sources */,
 				5A13CF0C24712BE600A19F18 /* AlertingControllerTests.swift in Sources */,
 			);
