@@ -126,8 +126,13 @@ class AlertingControllerTests : XCTestCase {
         XCTAssertEqual(controller.currentState, AlertState.reconnecting)
         
         reconnectCallback!(true)
-        XCTAssertEqual(controller.currentState, AlertState.reconnected)
+        XCTAssertEqual(controller.currentState, AlertState.reconnecting)
         
+        currentRate.send(0)
+        XCTAssertEqual(controller.currentState, AlertState.reconnecting)
+        
+        currentRate.send(5)
+        XCTAssertEqual(controller.currentState, AlertState.reconnected)
         currentRate.send(5)
         XCTAssertEqual(controller.currentState, AlertState.failed)
         
@@ -167,6 +172,12 @@ class AlertingControllerTests : XCTestCase {
         XCTAssertEqual(controller.currentState, AlertState.reconnecting)
         
         reconnectCallback!(true)
+        XCTAssertEqual(controller.currentState, AlertState.reconnecting)
+        
+        currentRate.send(0)
+        XCTAssertEqual(controller.currentState, AlertState.reconnecting)
+        
+        currentRate.send(5)
         XCTAssertEqual(controller.currentState, AlertState.reconnected)
         
         // Requires two successful high rates

@@ -95,11 +95,21 @@ class AlertingController : ObservableObject {
                     state = .alert
                 }
             case .reconnecting:
-                onReconnect({ (success) in
-                    self.violationCounter = 0
-                    self._state$.send(success ? .reconnected : .failed)
-                })
-                state = .reconnecting
+                if (ticksInState == 0) {
+                    self.violationCounter = 1
+                    onReconnect({ (success) in
+                        self.violationCounter = 0
+                        if (!success) {
+                            self._state$.send(.failed)
+                        }
+                    })
+                    state = .reconnecting
+                } else if (self.violationCounter == 0) {
+                    state = .reconnected
+                } else {
+                    self.violationCounter += 1
+                    state = .reconnecting
+                }
             case .reconnected:
                 if (violated) {
                     state = .failed
