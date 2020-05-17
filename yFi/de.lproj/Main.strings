@@ -1,0 +1,42 @@
+
+/* Class = "NSMenuItem"; title = "yFi"; ObjectID = "1Xt-HY-uBw"; */
+"1Xt-HY-uBw.title" = "yFi";
+
+/* Class = "NSMenuItem"; title = "Quit yFi"; ObjectID = "4sb-4s-VLi"; */
+"4sb-4s-VLi.title" = "Quit yFi";
+
+/* Class = "NSMenuItem"; title = "About yFi"; ObjectID = "5kV-Vb-QxS"; */
+"5kV-Vb-QxS.title" = "About yFi";
+
+/* Class = "NSMenu"; title = "Main Menu"; ObjectID = "AYu-sK-qS6"; */
+"AYu-sK-qS6.title" = "Main Menu";
+
+/* Class = "NSMenuItem"; title = "Preferences…"; ObjectID = "BOF-NM-1cW"; */
+"BOF-NM-1cW.title" = "Preferences…";
+
+/* Class = "NSMenu"; title = "Help"; ObjectID = "F2S-fz-NVQ"; */
+"F2S-fz-NVQ.title" = "Help";
+
+/* Class = "NSMenuItem"; title = "yFi Help"; ObjectID = "FKE-Sm-Kum"; */
+"FKE-Sm-Kum.title" = "yFi Help";
+
+/* Class = "NSMenuItem"; title = "Show All"; ObjectID = "Kd2-mp-pUS"; */
+"Kd2-mp-pUS.title" = "Show All";
+
+/* Class = "NSMenuItem"; title = "Services"; ObjectID = "NMo-om-nkz"; */
+"NMo-om-nkz.title" = "Services";
+
+/* Class = "NSMenuItem"; title = "Hide yFi"; ObjectID = "Olw-nP-bQN"; */
+"Olw-nP-bQN.title" = "Hide yFi";
+
+/* Class = "NSMenuItem"; title = "Hide Others"; ObjectID = "Vdr-fp-XzO"; */
+"Vdr-fp-XzO.title" = "Hide Others";
+
+/* Class = "NSMenu"; title = "Services"; ObjectID = "hz9-B4-Xy5"; */
+"hz9-B4-Xy5.title" = "Services";
+
+/* Class = "NSMenu"; title = "yFi"; ObjectID = "uQy-DD-JDr"; */
+"uQy-DD-JDr.title" = "yFi";
+
+/* Class = "NSMenuItem"; title = "Help"; ObjectID = "wpr-3q-Mcd"; */
+"wpr-3q-Mcd.title" = "Help";

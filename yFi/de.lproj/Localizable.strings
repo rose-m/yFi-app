@@ -1,0 +1,12 @@
+/* 
+  Localizable.strings
+  yFi
+
+  Created by Michael Rose on 17.05.20.
+  Copyright © 2020 Coderose. All rights reserved.
+*/
+"alertView.label.clear"="WLAN funktioniert";
+"alertView.label.reconnecting"="Neu verbinden...";
+"alertView.label.reconnected"="Neu verbunden";
+"alertView.label.failed"="Weiterhin Probleme";
+"alertView.label.issues"="WLAN problematisch";

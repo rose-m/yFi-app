@@ -22,34 +22,34 @@ class AlertViewModelTest: XCTestCase {
         model.state = .clear
         XCTAssertEqual(model.icon, "icon-check")
         XCTAssertEqual(model.color, Color.green)
-        XCTAssertEqual(model.content, LocalizedStringKey(stringLiteral: "WiFi working normally"))
+        XCTAssertEqual(model.content, LocalizedStringKey("alertView.label.clear"))
     }
     
     func testAlertState() {
         model.state = .alert
         XCTAssertEqual(model.icon, "icon-warning")
         XCTAssertEqual(model.color, Color.yellow)
-        XCTAssertEqual(model.content, LocalizedStringKey(stringLiteral: "WiFi rate dropped"))
+        XCTAssertEqual(model.content, LocalizedStringKey("alertView.label.issues"))
     }
     
     func testReconnectingState() {
         model.state = .reconnecting
         XCTAssertEqual(model.icon, "icon-reconnect")
         XCTAssertEqual(model.color, Color.yellow)
-        XCTAssertEqual(model.content, LocalizedStringKey(stringLiteral: "Reconnecting..."))
+        XCTAssertEqual(model.content, LocalizedStringKey("alertView.label.reconnecting"))
     }
     
     func testReconnectedState() {
         model.state = .reconnected
         XCTAssertEqual(model.icon, "icon-check")
         XCTAssertEqual(model.color, Color.green)
-        XCTAssertEqual(model.content, LocalizedStringKey(stringLiteral: "Reconnected"))
+        XCTAssertEqual(model.content, LocalizedStringKey("alertView.label.reconnected"))
     }
     
     func testFailedState() {
         model.state = .failed
         XCTAssertEqual(model.icon, "icon-failed")
         XCTAssertEqual(model.color, Color.red)
-        XCTAssertEqual(model.content, LocalizedStringKey(stringLiteral: "WiFi issues persist"))
+        XCTAssertEqual(model.content, LocalizedStringKey("alertView.label.failed"))
     }
 }

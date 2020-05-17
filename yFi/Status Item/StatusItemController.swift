@@ -16,7 +16,7 @@ class StatusItemController {
     private static let SETTINGS_VIEW_WIDTH = 300
     private static let SETTINGS_VIEW_HEIGHT = 100
     
-    private static let ALERT_VIEW_WIDTH = 180
+    private static let ALERT_VIEW_WIDTH = 190
     private static let ALERT_VIEW_HEIGHT = 30
     
     private let statusItem = NSStatusBar.system.statusItem(withLength: 70)

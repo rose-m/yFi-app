@@ -51,15 +51,15 @@ class AlertViewModel : ObservableObject {
         get {
             switch state {
             case .clear:
-                return LocalizedStringKey(stringLiteral: "WiFi working normally")
+                return LocalizedStringKey("alertView.label.clear")
             case .reconnecting:
-                return LocalizedStringKey(stringLiteral: "Reconnecting...")
+                return LocalizedStringKey("alertView.label.reconnecting")
             case .reconnected:
-                return LocalizedStringKey(stringLiteral: "Reconnected")
+                return LocalizedStringKey("alertView.label.reconnected")
             case .failed:
-                return LocalizedStringKey(stringLiteral: "WiFi issues persist")
+                return LocalizedStringKey("alertView.label.failed")
             default:
-                return LocalizedStringKey(stringLiteral: "WiFi rate dropped")
+                return LocalizedStringKey("alertView.label.issues")
             }
         }
     }
