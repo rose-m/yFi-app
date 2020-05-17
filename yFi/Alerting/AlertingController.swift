@@ -14,6 +14,12 @@ typealias OnReconnectCallback = (@escaping (Bool) -> Void) -> Void
 class AlertingController : ObservableObject {
     
     let state$: AnyPublisher<AlertState, Never>
+    var currentState: AlertState {
+        get {
+            _state$.value
+        }
+    }
+    
     private let _state$ = CurrentValueSubject<AlertState, Never>(.clear)
     
     private var lowRateAction: LowRateAction = .notify

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5A13CF0C24712BE600A19F18 /* AlertingControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A13CF0B24712BE600A19F18 /* AlertingControllerTests.swift */; };
 		5A1C40FF246FD1AD0042D269 /* AlertingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A1C40FE246FD1AD0042D269 /* AlertingController.swift */; };
 		5A1C4101247030DB0042D269 /* AlertState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A1C4100247030DB0042D269 /* AlertState.swift */; };
 		5A2AF7152466E492007AAE5D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A2AF7142466E492007AAE5D /* AppDelegate.swift */; };
@@ -41,6 +42,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		5A13CF0B24712BE600A19F18 /* AlertingControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertingControllerTests.swift; sourceTree = "<group>"; };
 		5A1C40FD246FCE240042D269 /* Documentation */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Documentation; path = yFi/Documentation; sourceTree = "<group>"; };
 		5A1C40FE246FD1AD0042D269 /* AlertingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertingController.swift; sourceTree = "<group>"; };
 		5A1C4100247030DB0042D269 /* AlertState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertState.swift; sourceTree = "<group>"; };
@@ -140,6 +142,7 @@
 			children = (
 				5A2AF72A2466E495007AAE5D /* yFiTests.swift */,
 				5A2AF72C2466E495007AAE5D /* Info.plist */,
+				5A13CF0B24712BE600A19F18 /* AlertingControllerTests.swift */,
 			);
 			path = yFiTests;
 			sourceTree = "<group>";
@@ -336,6 +339,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5A2AF72B2466E495007AAE5D /* yFiTests.swift in Sources */,
+				5A13CF0C24712BE600A19F18 /* AlertingControllerTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
