@@ -40,7 +40,7 @@ class AlertingController : ObservableObject {
         self.onReconnect = onReconnect
         
         let cancelRate = rate$.sink(receiveValue: onTickRate(_:))
-        let cancelLimit = limit$.assign(to: \.rateLimit, on: self)
+        let cancelLimit = limit$.sink(receiveValue: onLimitChange(_:))
         let cancelAction = action$.sink(receiveValue: onLowRateActionChange(_:))
         cancelSubscriptions = AnyCancellable({
             cancelRate.cancel()
@@ -132,6 +132,13 @@ class AlertingController : ObservableObject {
         } else {
             print("ERROR: new state was not set")
         }
+    }
+    
+    private func onLimitChange(_ limit: Int) -> Void {
+        rateLimit = limit
+        violationCounter = 0
+        ticksInState = 0
+        _state$.send(.clear)
     }
     
     private func onLowRateActionChange(_ action: LowRateAction) -> Void {
