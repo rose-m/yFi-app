@@ -41,11 +41,9 @@ class WifiController {
      
         do {
             try iface.setPower(false)
-            print("Set power to false")
             Timer.scheduledTimer(withTimeInterval: 1.0, repeats: false) { [weak self] _ in
                 do {
                     try self?.iface.setPower(true)
-                    print("Set power to true")
                     self?.reconnecting = false
                     whenReconnected(true)
                 } catch {
