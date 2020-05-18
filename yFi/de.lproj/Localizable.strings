@@ -18,4 +18,5 @@
 "settingsView.label.notify"="Hinweis";
 "settingsView.label.reconnect"="Neu verbinden";
 "settingsView.label.ignore"="Ignorieren";
+"settingsView.label.launchAtLogin"="Beim Anmelden starten";
 "settingsView.label.quit"="Beenden";

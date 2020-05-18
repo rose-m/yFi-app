@@ -115,7 +115,7 @@ class StatusItemController {
     private func updateDisplay() {
         DispatchQueue.main.async {
             if self.showTxRate {
-                let content = String(format: "%.0f", self.txRate)
+                let content = self.txRate == 0 ? "N/A" : String(format: "%.0f", self.txRate)
                 
                 self.statusItem.length = 70
                 if let button = self.statusItem.button {

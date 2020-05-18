@@ -56,8 +56,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     private func onLaunchAtLoginChange(_ launchAtLogin: Bool) {
-        LaunchAtLogin.isEnabled = launchAtLogin
-        settings.launchAtLogin = LaunchAtLogin.isEnabled
+        if (LaunchAtLogin.isEnabled != launchAtLogin) {
+            LaunchAtLogin.isEnabled = launchAtLogin
+        }
     }
     
 }

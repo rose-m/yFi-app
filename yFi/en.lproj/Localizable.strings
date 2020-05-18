@@ -18,4 +18,5 @@
 "settingsView.label.notify"="Notify";
 "settingsView.label.reconnect"="Reconnect";
 "settingsView.label.ignore"="Ignore";
+"settingsView.label.launchAtLogin"="Launch at login";
 "settingsView.label.quit"="Quit";

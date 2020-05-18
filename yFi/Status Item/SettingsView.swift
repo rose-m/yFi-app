@@ -11,7 +11,7 @@ import SwiftUI
 struct SettingsView: View {
     
     public static let WIDTH: CGFloat = 300.0
-    public static let HEIGHT: CGFloat = 205.0
+    public static let HEIGHT: CGFloat = 230.0
     
     @ObservedObject var model: SettingsModel
     
@@ -45,9 +45,14 @@ struct SettingsView: View {
             Spacer()
             
             HStack(alignment: .center) {
+                Toggle("settingsView.label.launchAtLogin", isOn: $model.launchAtLogin)
+                Spacer()
+            }.padding([.top])
+            
+            HStack(alignment: .center) {
                 Spacer()
                 Button("settingsView.label.quit", action: self.onQuit)
-            }.padding([.top])
+            }
             
             Spacer()
         }.frame(maxWidth: .infinity, maxHeight: SettingsView.HEIGHT).padding([.horizontal])
