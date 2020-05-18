@@ -9,6 +9,7 @@
 import Cocoa
 import SwiftUI
 import Combine
+import LaunchAtLogin
 
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
@@ -22,6 +23,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         // We do not create a window here
         NSApp.setActivationPolicy(.accessory)
+        
+        print(LaunchAtLogin.isEnabled)
         
         settings = SettingsModel(onQuit: {
             NSApp.terminate(self)

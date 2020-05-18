@@ -24,6 +24,7 @@
 		5AC4E64F2466EF47004E7E1A /* WifiController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AC4E64E2466EF47004E7E1A /* WifiController.swift */; };
 		5AC4E6502466F421004E7E1A /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5A2AF7372466E495007AAE5D /* Info.plist */; };
 		5ADE85F82471740400A512AF /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5ADE85FA2471740400A512AF /* Localizable.strings */; };
+		5AEC9CA52472F86800CD66D8 /* LaunchAtLogin.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5AEC9CA42472F86800CD66D8 /* LaunchAtLogin.framework */; };
 		5AF8F06C246DCC2500C2B702 /* AlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF8F06B246DCC2500C2B702 /* AlertView.swift */; };
 /* End PBXBuildFile section */
 
@@ -71,6 +72,7 @@
 		5ADE85F92471740400A512AF /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		5ADE85FB247175AA00A512AF /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Main.strings; sourceTree = "<group>"; };
 		5ADE85FC247175AA00A512AF /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
+		5AEC9CA42472F86800CD66D8 /* LaunchAtLogin.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LaunchAtLogin.framework; path = Carthage/Build/Mac/LaunchAtLogin.framework; sourceTree = "<group>"; };
 		5AF8F06B246DCC2500C2B702 /* AlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -79,6 +81,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5AEC9CA52472F86800CD66D8 /* LaunchAtLogin.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -107,6 +110,7 @@
 				5A2AF7292466E495007AAE5D /* yFiTests */,
 				5A2AF7342466E495007AAE5D /* yFiUITests */,
 				5A2AF7122466E492007AAE5D /* Products */,
+				5AEC9CA42472F86800CD66D8 /* LaunchAtLogin.framework */,
 			);
 			sourceTree = "<group>";
 		};
@@ -212,6 +216,8 @@
 				5A2AF70D2466E492007AAE5D /* Sources */,
 				5A2AF70E2466E492007AAE5D /* Frameworks */,
 				5A2AF70F2466E492007AAE5D /* Resources */,
+				5AEC9CA62472F88F00CD66D8 /* Embed Frameworks */,
+				5AEC9CA72472F90200CD66D8 /* Copy LaunchAtLogin Helper */,
 			);
 			buildRules = (
 			);
@@ -330,6 +336,47 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		5AEC9CA62472F88F00CD66D8 /* Embed Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/Carthage/Build/Mac/LaunchAtLogin.framework",
+			);
+			name = "Embed Frameworks";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/LaunchAtLogin.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "/usr/local/bin/carthage copy-frameworks\n";
+		};
+		5AEC9CA72472F90200CD66D8 /* Copy LaunchAtLogin Helper */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Copy LaunchAtLogin Helper";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "${PROJECT_DIR}/Carthage/Build/Mac/LaunchAtLogin.framework/Resources/copy-helper.sh\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		5A2AF70D2466E492007AAE5D /* Sources */ = {
@@ -529,6 +576,10 @@
 				DEVELOPMENT_ASSET_PATHS = "\"yFi/Preview Content\"";
 				DEVELOPMENT_TEAM = BST2VL3LCN;
 				ENABLE_PREVIEWS = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/Mac",
+				);
 				INFOPLIST_FILE = yFi/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -552,6 +603,10 @@
 				DEVELOPMENT_ASSET_PATHS = "\"yFi/Preview Content\"";
 				DEVELOPMENT_TEAM = BST2VL3LCN;
 				ENABLE_PREVIEWS = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/Mac",
+				);
 				INFOPLIST_FILE = yFi/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
