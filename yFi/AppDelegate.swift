@@ -13,7 +13,7 @@ import Combine
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
     
-    let settings = SettingsModel()
+    var settings: SettingsModel!
     
     var statusItemController: StatusItemController!
     var wifiManager: WifiController!
@@ -22,6 +22,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         // We do not create a window here
         NSApp.setActivationPolicy(.accessory)
+        
+        settings = SettingsModel(onQuit: {
+            NSApp.terminate(self)
+        })
         
         wifiManager = WifiController()
         

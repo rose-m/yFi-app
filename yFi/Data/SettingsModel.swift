@@ -25,4 +25,10 @@ class SettingsModel : ObservableObject {
     
     @Published var lowRateAction: LowRateAction = SettingsModel.DEFAULT_LOW_RATE_ACTION
     
+    var onQuit: (() -> Void)?
+    
+    init(onQuit: (() -> Void)? = nil) {
+        self.onQuit = onQuit
+    }
+    
 }

@@ -12,6 +12,9 @@ import Combine
 
 struct AlertView : View {
     
+    public static let WIDTH: CGFloat = 190.0
+    public static let HEIGHT: CGFloat = 30.0
+    
     @ObservedObject var model: AlertViewModel
     
     var body: some View {
@@ -32,7 +35,8 @@ struct AlertView : View {
 
 struct AlertView_Previews: PreviewProvider {
     static var previews: some View {
-        AlertView(model: AlertViewModel()).frame(width: 150, height: 30)
+        AlertView(model: AlertViewModel())
+            .frame(width: AlertView.WIDTH, height: AlertView.HEIGHT)
     }
 }
 

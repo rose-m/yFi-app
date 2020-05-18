@@ -13,12 +13,6 @@ import SwiftUI
 
 class StatusItemController {
     
-    private static let SETTINGS_VIEW_WIDTH = 300
-    private static let SETTINGS_VIEW_HEIGHT = 100
-    
-    private static let ALERT_VIEW_WIDTH = 190
-    private static let ALERT_VIEW_HEIGHT = 30
-    
     private let statusItem = NSStatusBar.system.statusItem(withLength: 70)
     
     private let settingsPopover = NSPopover()
@@ -78,16 +72,16 @@ class StatusItemController {
     private func initSettingsPopover() {
         settingsView = SettingsView(model: settings)
         settingsPopover.behavior = .transient
-        settingsPopover.contentSize = NSSize(width: StatusItemController.SETTINGS_VIEW_WIDTH,
-                                             height: StatusItemController.SETTINGS_VIEW_HEIGHT)
+        settingsPopover.contentSize = NSSize(width: SettingsView.WIDTH,
+                                             height: SettingsView.HEIGHT)
         settingsPopover.contentViewController = NSHostingController(rootView: settingsView)
     }
     
     private func initAlertPopover() {
         alertView = AlertView(model: alertViewModel)
         alertPopover.behavior = .transient
-        alertPopover.contentSize = NSSize(width: StatusItemController.ALERT_VIEW_WIDTH,
-                                          height: StatusItemController.ALERT_VIEW_HEIGHT)
+        alertPopover.contentSize = NSSize(width: AlertView.WIDTH,
+                                          height: AlertView.HEIGHT)
         alertPopover.appearance = NSAppearance(named: NSAppearance.Name.vibrantDark)
         alertPopover.contentViewController = NSHostingController(rootView: alertView)
     }

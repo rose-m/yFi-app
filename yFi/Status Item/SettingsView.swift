@@ -10,6 +10,9 @@ import SwiftUI
 
 struct SettingsView: View {
     
+    public static let WIDTH: CGFloat = 300.0
+    public static let HEIGHT: CGFloat = 100.0
+    
     @ObservedObject var model: SettingsModel
     
     let rateFormater = NumberFormatter()
@@ -39,15 +42,24 @@ struct SettingsView: View {
                 Text("Ignore").tag(LowRateAction.ignore)
             }.pickerStyle(SegmentedPickerStyle())
             
+            HStack(alignment: .center) {
+                Spacer()
+                Button("Quit", action: self.onQuit)
+            }.padding([.top])
+            
             Spacer()
         }.frame(maxWidth: .infinity, maxHeight: .infinity).padding([.horizontal])
     }
     
+    private func onQuit() {
+        model.onQuit?()
+    }
 }
 
 
 struct SettingsView_Previews: PreviewProvider {
     static var previews: some View {
         SettingsView(model: SettingsModel())
+            .frame(width: SettingsView.WIDTH, height: 195)
     }
 }
