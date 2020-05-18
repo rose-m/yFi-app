@@ -25,6 +25,8 @@ class SettingsModel : ObservableObject {
     
     @Published var lowRateAction: LowRateAction = SettingsModel.DEFAULT_LOW_RATE_ACTION
     
+    @Published var launchAtLogin: Bool = false
+    
     var onQuit: (() -> Void)?
     
     init(onQuit: (() -> Void)? = nil) {

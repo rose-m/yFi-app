@@ -20,15 +20,17 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     var wifiManager: WifiController!
     var alertingController: AlertingController!
     
+    var launchAtLoginCancellable: AnyCancellable?
+    
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         // We do not create a window here
         NSApp.setActivationPolicy(.accessory)
         
-        print(LaunchAtLogin.isEnabled)
-        
         settings = SettingsModel(onQuit: {
             NSApp.terminate(self)
         })
+        settings.launchAtLogin = LaunchAtLogin.isEnabled
+        launchAtLoginCancellable = settings.$launchAtLogin.sink(receiveValue: onLaunchAtLoginChange(_:))
         
         wifiManager = WifiController()
         
@@ -47,6 +49,15 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     func applicationWillTerminate(_ aNotification: Notification) {
+        if let c = launchAtLoginCancellable {
+            c.cancel()
+            launchAtLoginCancellable = nil
+        }
+    }
+    
+    private func onLaunchAtLoginChange(_ launchAtLogin: Bool) {
+        LaunchAtLogin.isEnabled = launchAtLogin
+        settings.launchAtLogin = LaunchAtLogin.isEnabled
     }
     
 }
