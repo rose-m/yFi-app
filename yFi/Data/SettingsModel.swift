@@ -17,11 +17,11 @@ enum LowRateAction {
 
 class SettingsModel : ObservableObject {
     
-    static let DEFAULT_LOW_RATE_ACTION: LowRateAction = .reconnect
+    static let DEFAULT_LOW_RATE_ACTION: LowRateAction = .notify
     
     @Published var showTxRate: Bool = true
     
-    @Published var rateLimit: Int = 0
+    @Published var rateLimit: Int = 30
     
     @Published var lowRateAction: LowRateAction = SettingsModel.DEFAULT_LOW_RATE_ACTION
     
