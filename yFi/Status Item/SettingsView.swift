@@ -11,7 +11,7 @@ import SwiftUI
 struct SettingsView: View {
     
     public static let WIDTH: CGFloat = 300.0
-    public static let HEIGHT: CGFloat = 100.0
+    public static let HEIGHT: CGFloat = 205.0
     
     @ObservedObject var model: SettingsModel
     
@@ -20,35 +20,37 @@ struct SettingsView: View {
     var body: some View {
         VStack(alignment: .leading) {
             HStack(alignment: .center) {
-                Toggle("Show TX Rate", isOn: $model.showTxRate)
+                Toggle("settingsView.label.showTxRate", isOn: $model.showTxRate)
                 Spacer()
             }.padding([.top])
             
             HStack(alignment: .center) {
-                Text("Limit:")
-                TextField("Limit", value: $model.rateLimit, formatter: rateFormater)
+                Text("settingsView.label.limitLabel")
+                TextField("settingsView.label.limit", value: $model.rateLimit, formatter: rateFormater)
                     .multilineTextAlignment(.trailing)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                 Spacer()
-            }.padding([.top])
+            }
             
-            Text("If the TX rate drops below the limit, we will take action.")
+            Text("settingsView.label.limitExplanation")
                 .foregroundColor(.secondary)
-                .frame(height: 40)
+                .fixedSize(horizontal: false, vertical: true)
             
-            Picker("Action:", selection: $model.lowRateAction) {
-                Text("Notify").tag(LowRateAction.notify)
-                Text("Reconnect").tag(LowRateAction.reconnect)
-                Text("Ignore").tag(LowRateAction.ignore)
-            }.pickerStyle(SegmentedPickerStyle())
+            Picker("settingsView.label.action", selection: $model.lowRateAction) {
+                Text("settingsView.label.notify").tag(LowRateAction.notify)
+                Text("settingsView.label.reconnect").tag(LowRateAction.reconnect)
+                Text("settingsView.label.ignore").tag(LowRateAction.ignore)
+            }
+            
+            Spacer()
             
             HStack(alignment: .center) {
                 Spacer()
-                Button("Quit", action: self.onQuit)
+                Button("settingsView.label.quit", action: self.onQuit)
             }.padding([.top])
             
             Spacer()
-        }.frame(maxWidth: .infinity, maxHeight: .infinity).padding([.horizontal])
+        }.frame(maxWidth: .infinity, maxHeight: SettingsView.HEIGHT).padding([.horizontal])
     }
     
     private func onQuit() {

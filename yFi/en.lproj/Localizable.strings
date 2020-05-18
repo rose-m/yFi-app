@@ -10,3 +10,12 @@
 "alertView.label.reconnected"="Reconnected";
 "alertView.label.failed"="Problems persist";
 "alertView.label.issues"="WiFi rate dropped";
+"settingsView.label.showTxRate"="Show TX Rate";
+"settingsView.label.limitLabel"="Limit:";
+"settingsView.label.limit"="Limit";
+"settingsView.label.limitExplanation"="If the TX Rate is below the limit for more than 5 seconds, the selected action is executed.";
+"settingsView.label.action"="Action:";
+"settingsView.label.notify"="Notify";
+"settingsView.label.reconnect"="Reconnect";
+"settingsView.label.ignore"="Ignore";
+"settingsView.label.quit"="Quit";

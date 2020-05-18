@@ -10,3 +10,12 @@
 "alertView.label.reconnected"="Neu verbunden";
 "alertView.label.failed"="Weiterhin Probleme";
 "alertView.label.issues"="WLAN problematisch";
+"settingsView.label.showTxRate"="TX Rate anzeigen";
+"settingsView.label.limitLabel"="Limit:";
+"settingsView.label.limit"="Limit";
+"settingsView.label.limitExplanation"="Ist die TX Rate länger als 5 Sekunden unterhalb des Limits wird die Aktion ausgeführt.";
+"settingsView.label.action"="Aktion:";
+"settingsView.label.notify"="Hinweis";
+"settingsView.label.reconnect"="Neu verbinden";
+"settingsView.label.ignore"="Ignorieren";
+"settingsView.label.quit"="Beenden";
