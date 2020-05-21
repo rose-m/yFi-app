@@ -10,6 +10,7 @@ import Cocoa
 import SwiftUI
 import Combine
 import LaunchAtLogin
+import Defaults
 
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
@@ -20,21 +21,23 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     var wifiManager: WifiController!
     var alertingController: AlertingController!
     
-    var launchAtLoginCancellable: AnyCancellable?
-    var updateSettingsRateCancellable: AnyCancellable?
+    var cancelSubscriptions: AnyCancellable?
     
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         // We do not create a window here
         NSApp.setActivationPolicy(.accessory)
         
-        settings = SettingsModel(onQuit: {
+        settings = SettingsModel(fromDefaultsWithOnQuit: {
             NSApp.terminate(self)
         })
         settings.launchAtLogin = LaunchAtLogin.isEnabled
-        launchAtLoginCancellable = settings.$launchAtLogin.sink(receiveValue: onLaunchAtLoginChange(_:))
+        let cancelLaunchAtLogin = settings.$launchAtLogin.sink(receiveValue: onLaunchAtLoginChange(_:))
+        let cancelDefaultsShowTxRate = settings.$showTxRate.sink(receiveValue: { showTxRate in Defaults[.showTxRate] = showTxRate })
+        let cancelDefaultsRateLimit = settings.$rateLimit.sink(receiveValue: { limit in Defaults[.rateLimit] = limit })
+        let cancelDefaultsLowRateAction = settings.$lowRateAction.sink(receiveValue: { action in Defaults[.lowRateAction] = action })
         
         wifiManager = WifiController()
-        updateSettingsRateCancellable = wifiManager.rate$.assign(to: \SettingsModel.currentTxRate, on: settings)
+        let cancelUpdateTxRate = wifiManager.rate$.assign(to: \SettingsModel.currentTxRate, on: settings)
         
         alertingController = AlertingController(
             currentRate: wifiManager.rate$,
@@ -48,16 +51,21 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             withRate: wifiManager.rate$,
             currentState: alertingController.state$
         )
+        
+        cancelSubscriptions = AnyCancellable({
+            cancelLaunchAtLogin.cancel()
+            cancelUpdateTxRate.cancel()
+            
+            cancelDefaultsShowTxRate.cancel()
+            cancelDefaultsRateLimit.cancel()
+            cancelDefaultsLowRateAction.cancel()
+        })
     }
     
     func applicationWillTerminate(_ aNotification: Notification) {
-        if let c = launchAtLoginCancellable {
+        if let c = cancelSubscriptions {
             c.cancel()
-            launchAtLoginCancellable = nil
-        }
-        if let c = updateSettingsRateCancellable {
-            c.cancel()
-            updateSettingsRateCancellable = nil
+            cancelSubscriptions = nil
         }
     }
     

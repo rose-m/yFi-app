@@ -8,30 +8,41 @@
 
 import Foundation
 import Combine
+import Defaults
 
-enum LowRateAction {
-    case notify
-    case reconnect
-    case ignore
+enum LowRateAction: String, Codable {
+    case notify = "notify"
+    case reconnect = "reconnect"
+    case ignore = "ignore"
 }
 
 class SettingsModel : ObservableObject {
     
     static let DEFAULT_LOW_RATE_ACTION: LowRateAction = .notify
     
-    @Published var showTxRate: Bool = true
+    @Published var showTxRate: Bool
     
-    @Published var rateLimit: Int = 30
+    @Published var rateLimit: Int
     
     @Published var currentTxRate: Double = 0
     
-    @Published var lowRateAction: LowRateAction = SettingsModel.DEFAULT_LOW_RATE_ACTION
+    @Published var lowRateAction: LowRateAction
     
     @Published var launchAtLogin: Bool = false
     
     var onQuit: (() -> Void)?
     
-    init(onQuit: (() -> Void)? = nil) {
+    init(showTxRate: Bool = true, rateLimit: Int = 0, lowRateAction: LowRateAction = .notify, onQuit: (() -> Void)? = nil) {
+        self.showTxRate = showTxRate
+        self.rateLimit = rateLimit
+        self.lowRateAction = lowRateAction
+        self.onQuit = onQuit
+    }
+    
+    init(fromDefaultsWithOnQuit onQuit: (() -> Void)? = nil) {
+        showTxRate = Defaults[.showTxRate]
+        rateLimit = Defaults[.rateLimit]
+        lowRateAction = Defaults[.lowRateAction]
         self.onQuit = onQuit
     }
     

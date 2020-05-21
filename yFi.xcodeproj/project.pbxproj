@@ -25,6 +25,8 @@
 		5AC4E6502466F421004E7E1A /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5A2AF7372466E495007AAE5D /* Info.plist */; };
 		5ADE85F82471740400A512AF /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5ADE85FA2471740400A512AF /* Localizable.strings */; };
 		5AEC9CA52472F86800CD66D8 /* LaunchAtLogin.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5AEC9CA42472F86800CD66D8 /* LaunchAtLogin.framework */; };
+		5AF404EB247676E7002DAE7D /* Defaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF404EA247676E7002DAE7D /* Defaults.swift */; };
+		5AF404ED2476794E002DAE7D /* Defaults.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5AF404EC2476794E002DAE7D /* Defaults.framework */; };
 		5AF8F06C246DCC2500C2B702 /* AlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF8F06B246DCC2500C2B702 /* AlertView.swift */; };
 /* End PBXBuildFile section */
 
@@ -73,6 +75,8 @@
 		5ADE85FB247175AA00A512AF /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Main.strings; sourceTree = "<group>"; };
 		5ADE85FC247175AA00A512AF /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
 		5AEC9CA42472F86800CD66D8 /* LaunchAtLogin.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LaunchAtLogin.framework; path = Carthage/Build/Mac/LaunchAtLogin.framework; sourceTree = "<group>"; };
+		5AF404EA247676E7002DAE7D /* Defaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Defaults.swift; sourceTree = "<group>"; };
+		5AF404EC2476794E002DAE7D /* Defaults.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Defaults.framework; path = Carthage/Build/Mac/Defaults.framework; sourceTree = "<group>"; };
 		5AF8F06B246DCC2500C2B702 /* AlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -81,6 +85,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5AF404ED2476794E002DAE7D /* Defaults.framework in Frameworks */,
 				5AEC9CA52472F86800CD66D8 /* LaunchAtLogin.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -110,6 +115,7 @@
 				5A2AF7292466E495007AAE5D /* yFiTests */,
 				5A2AF7342466E495007AAE5D /* yFiUITests */,
 				5A2AF7122466E492007AAE5D /* Products */,
+				5AF404EC2476794E002DAE7D /* Defaults.framework */,
 				5AEC9CA42472F86800CD66D8 /* LaunchAtLogin.framework */,
 			);
 			sourceTree = "<group>";
@@ -194,6 +200,7 @@
 				5A6C0E4A246831BF0021828A /* SettingsModel.swift */,
 				5A1C4100247030DB0042D269 /* AlertState.swift */,
 				5A0DA2382471641C00A1C262 /* AlertViewModel.swift */,
+				5AF404EA247676E7002DAE7D /* Defaults.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -347,12 +354,14 @@
 			);
 			inputPaths = (
 				"$(SRCROOT)/Carthage/Build/Mac/LaunchAtLogin.framework",
+				"$(SRCROOT)/Carthage/Build/Mac/Defaults.framework",
 			);
 			name = "Embed Frameworks";
 			outputFileListPaths = (
 			);
 			outputPaths = (
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/LaunchAtLogin.framework",
+				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/Defaults.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -390,6 +399,7 @@
 				5AF8F06C246DCC2500C2B702 /* AlertView.swift in Sources */,
 				5A2AF7152466E492007AAE5D /* AppDelegate.swift in Sources */,
 				5A1C4101247030DB0042D269 /* AlertState.swift in Sources */,
+				5AF404EB247676E7002DAE7D /* Defaults.swift in Sources */,
 				5A1C40FF246FD1AD0042D269 /* AlertingController.swift in Sources */,
 				5A6C0E4B246831BF0021828A /* SettingsModel.swift in Sources */,
 			);
