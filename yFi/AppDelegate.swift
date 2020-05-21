@@ -21,6 +21,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     var alertingController: AlertingController!
     
     var launchAtLoginCancellable: AnyCancellable?
+    var updateSettingsRateCancellable: AnyCancellable?
     
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         // We do not create a window here
@@ -33,6 +34,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         launchAtLoginCancellable = settings.$launchAtLogin.sink(receiveValue: onLaunchAtLoginChange(_:))
         
         wifiManager = WifiController()
+        updateSettingsRateCancellable = wifiManager.rate$.assign(to: \SettingsModel.currentTxRate, on: settings)
         
         alertingController = AlertingController(
             currentRate: wifiManager.rate$,
@@ -52,6 +54,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         if let c = launchAtLoginCancellable {
             c.cancel()
             launchAtLoginCancellable = nil
+        }
+        if let c = updateSettingsRateCancellable {
+            c.cancel()
+            updateSettingsRateCancellable = nil
         }
     }
     

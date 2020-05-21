@@ -15,6 +15,12 @@ struct SettingsView: View {
     
     @ObservedObject var model: SettingsModel
     
+    var currentTxRate: String {
+        get {
+            model.currentTxRate == 0 ? "N/A" : String(format: "%.0f", model.currentTxRate)
+        }
+    }
+    
     let rateFormater = NumberFormatter()
     
     var body: some View {
@@ -29,7 +35,17 @@ struct SettingsView: View {
                 TextField("settingsView.label.limit", value: $model.rateLimit, formatter: rateFormater)
                     .multilineTextAlignment(.trailing)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
-                Spacer()
+                
+                Text("settingsView.label.currentRate")
+                    .foregroundColor(.secondary)
+                Text(currentTxRate)
+                    .foregroundColor(.secondary)
+                    .frame(width: 40, alignment: .trailing)
+                    .padding(0)
+                Text("MBit/s")
+                    .foregroundColor(.secondary)
+                    .multilineTextAlignment(.leading)
+                    .padding(0)
             }
             
             Text("settingsView.label.limitExplanation")

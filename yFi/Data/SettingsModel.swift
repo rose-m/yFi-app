@@ -23,6 +23,8 @@ class SettingsModel : ObservableObject {
     
     @Published var rateLimit: Int = 30
     
+    @Published var currentTxRate: Double = 0
+    
     @Published var lowRateAction: LowRateAction = SettingsModel.DEFAULT_LOW_RATE_ACTION
     
     @Published var launchAtLogin: Bool = false
