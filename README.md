@@ -2,6 +2,8 @@
 
 *yFi* is a simple app to make sure you stay connected and don't drop out.
 
+![](./yFi/Documentation/screenshot-1.jpg)
+
 ## Development
 
 1. Make sure you have [Carthage](https://github.com/Carthage/Carthage) installed.
