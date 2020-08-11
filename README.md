@@ -1,6 +1,6 @@
 # yFi App
 
-*yFi* is a simple app to make sure you stay connected and don't drop out.
+*yFi* is a simple app to make sure you stay connected and don't drop out. Checkout [the yFi website](https://yfi.coderose.io) for more details!
 
 ![](./yFi/Documentation/screenshot-1.jpg)
 
