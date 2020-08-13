@@ -2,6 +2,8 @@
 
 *yFi* is a simple app to make sure you stay connected and don't drop out. Checkout [the yFi website](https://yfi.coderose.io) for more details!
 
+<a href="https://www.producthunt.com/posts/yfi?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-yfi" target="_blank"><img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=230545&theme=light" alt="yFi - macOS utility app to monitor your WiFi connection. | Product Hunt Embed" style="width: 250px; height: 54px;" width="250px" height="54px" /></a>
+
 ![](./yFi/Documentation/screenshot-1.jpg)
 
 ## Development
