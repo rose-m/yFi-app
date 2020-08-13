@@ -10,6 +10,12 @@ import Foundation
 import Combine
 import Defaults
 
+enum StatusBarItemStyle: String, Codable {
+    case onlyIcon = "onlyIcon"
+    case onlyTxRate = "onlyTxRate"
+    case iconAndTxRate = "iconAndTxRate"
+}
+
 enum LowRateAction: String, Codable {
     case notify = "notify"
     case reconnect = "reconnect"
@@ -20,7 +26,7 @@ class SettingsModel : ObservableObject {
     
     static let DEFAULT_LOW_RATE_ACTION: LowRateAction = .notify
     
-    @Published var showTxRate: Bool
+    @Published var itemStyle: StatusBarItemStyle
     
     @Published var rateLimit: Int
     
@@ -32,15 +38,30 @@ class SettingsModel : ObservableObject {
     
     var onQuit: (() -> Void)?
     
-    init(showTxRate: Bool = true, rateLimit: Int = 0, lowRateAction: LowRateAction = .notify, onQuit: (() -> Void)? = nil) {
-        self.showTxRate = showTxRate
+    init(itemStyle: StatusBarItemStyle = .iconAndTxRate,
+         rateLimit: Int = 0,
+         lowRateAction: LowRateAction = .notify,
+         onQuit: (() -> Void)? = nil) {
+        self.itemStyle = itemStyle
         self.rateLimit = rateLimit
         self.lowRateAction = lowRateAction
         self.onQuit = onQuit
     }
     
     init(fromDefaultsWithOnQuit onQuit: (() -> Void)? = nil) {
-        showTxRate = Defaults[.showTxRate]
+        let showTxRate = Defaults[.showTxRate]
+        let defaultsItemStyle = Defaults[.itemStyle]
+        
+        if let itemStyle = defaultsItemStyle {
+            self.itemStyle = itemStyle
+        } else {
+            if let showRate = showTxRate {
+                itemStyle = showRate ? .iconAndTxRate : .onlyIcon
+            } else {
+                itemStyle = .iconAndTxRate
+            }
+        }
+        
         rateLimit = Defaults[.rateLimit]
         lowRateAction = Defaults[.lowRateAction]
         self.onQuit = onQuit

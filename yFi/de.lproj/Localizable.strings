@@ -10,7 +10,10 @@
 "alertView.label.reconnected"="Neu verbunden";
 "alertView.label.failed"="Weiterhin Probleme";
 "alertView.label.issues"="WLAN problematisch";
-"settingsView.label.showTxRate"="TX Rate anzeigen";
+"settingsView.label.itemStyle"="Item Stil:";
+"settingsView.label.itemStyleOnlyIcon"="Nur Icon";
+"settingsView.label.itemStyleOnlyTxRate"="Nur TX Rate";
+"settingsView.label.itemStyleIconAndTxRate"="Icon und TX Rate";
 "settingsView.label.limitLabel"="Limit:";
 "settingsView.label.limit"="Limit";
 "settingsView.label.currentRate"="Aktuell:";

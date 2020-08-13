@@ -24,7 +24,7 @@ class StatusItemController {
     
     private let settings: SettingsModel!
     
-    private var showTxRate = true
+    private var itemStyle = StatusBarItemStyle.iconAndTxRate
     private var txRate = 0.0
     
     private var cancelSubscriptions: AnyCancellable?
@@ -34,13 +34,13 @@ class StatusItemController {
          currentState state$: AnyPublisher<AlertState, Never>) {
         self.settings = settings
         
-        let cancelShowTxRate = settings.$showTxRate.sink(receiveValue: onShowTxRateChange)
-        let cancelRate = currentRate$.sink(receiveValue: onRateChange)
+        let cancelItemStyle = settings.$itemStyle.sink(receiveValue: onItemStyleChange(_:))
+        let cancelRate = currentRate$.sink(receiveValue: onRateChange(_:))
         let cancelState = state$.sink { state in
             DispatchQueue.main.async { self.onStateChange(state) }
         }
         cancelSubscriptions = AnyCancellable({
-            cancelShowTxRate.cancel()
+            cancelItemStyle.cancel()
             cancelRate.cancel()
             cancelState.cancel()
         })
@@ -86,8 +86,8 @@ class StatusItemController {
         alertPopover.contentViewController = NSHostingController(rootView: alertView)
     }
     
-    private func onShowTxRateChange(_ showTxRate: Bool) {
-        self.showTxRate = showTxRate
+    private func onItemStyleChange(_ itemStyle: StatusBarItemStyle) {
+        self.itemStyle = itemStyle
         updateDisplay()
     }
     
@@ -114,18 +114,31 @@ class StatusItemController {
     
     private func updateDisplay() {
         DispatchQueue.main.async {
-            if self.showTxRate {
-                let content = self.txRate == 0 ? "N/A" : String(format: "%.0f", self.txRate)
-                
-                self.statusItem.length = 70
+            if self.itemStyle == .onlyIcon {
                 if let button = self.statusItem.button {
-                    button.title = content
-                    button.imagePosition = .imageLeft
+                    self.statusItem.length = NSStatusItem.squareLength
+                    button.title = ""
+                    button.imagePosition = .imageOnly
                 }
-            } else if let button = self.statusItem.button {
-                self.statusItem.length = NSStatusItem.squareLength
-                button.title = ""
-                button.imagePosition = .imageOnly
+                return
+            }
+            
+            let content = self.txRate == 0 ? "N/A" : String(format: "%.0f", self.txRate)
+            let itemLength: CGFloat!
+            let imagePosition: NSControl.ImagePosition!
+            
+            if self.itemStyle == .onlyTxRate {
+                itemLength = 40
+                imagePosition = .noImage
+            } else {
+                itemLength = 70
+                imagePosition = .imageLeft
+            }
+            
+            self.statusItem.length = itemLength
+            if let button = self.statusItem.button {
+                button.title = content
+                button.imagePosition = imagePosition
             }
         }
     }
