@@ -10,7 +10,12 @@ import Foundation
 import Defaults
 
 extension Defaults.Keys {
-    static let showTxRate = Key<Bool>("showTxRate", default: true)
+    
+    @available(*, deprecated, message: "This flag is not supported anymore and should be migrated to itemStyle")
+    static let showTxRate = Key<Bool?>("showTxRate", default: nil)
+    
+    static let itemStyle = Key<StatusBarItemStyle?>("itemStyle", default: nil)
     static let rateLimit = Key<Int>("rateLimit", default: 0)
     static let lowRateAction = Key<LowRateAction>("lowRateAction", default: .notify)
+    
 }

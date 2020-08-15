@@ -11,7 +11,7 @@ import SwiftUI
 struct SettingsView: View {
     
     public static let WIDTH: CGFloat = 300.0
-    public static let HEIGHT: CGFloat = 230.0
+    public static let HEIGHT: CGFloat = 245.0
     
     @ObservedObject var model: SettingsModel
     
@@ -26,9 +26,14 @@ struct SettingsView: View {
     var body: some View {
         VStack(alignment: .leading) {
             HStack(alignment: .center) {
-                Toggle("settingsView.label.showTxRate", isOn: $model.showTxRate)
+                Picker("settingsView.label.itemStyle", selection: $model.itemStyle) {
+                    Text("settingsView.label.itemStyleOnlyIcon").tag(StatusBarItemStyle.onlyIcon)
+                    Text("settingsView.label.itemStyleOnlyTxRate").tag(StatusBarItemStyle.onlyTxRate)
+                    Text("settingsView.label.itemStyleIconAndTxRate").tag(StatusBarItemStyle.iconAndTxRate)
+                }
+                
                 Spacer()
-            }.padding([.top])
+            }.padding([.top, .bottom])
             
             HStack(alignment: .center) {
                 Text("settingsView.label.limitLabel")

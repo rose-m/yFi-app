@@ -32,7 +32,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         })
         settings.launchAtLogin = LaunchAtLogin.isEnabled
         let cancelLaunchAtLogin = settings.$launchAtLogin.sink(receiveValue: onLaunchAtLoginChange(_:))
-        let cancelDefaultsShowTxRate = settings.$showTxRate.sink(receiveValue: { showTxRate in Defaults[.showTxRate] = showTxRate })
+        let cancelDefaultsItemStyle = settings.$itemStyle.sink(receiveValue: { itemStyle in Defaults[.itemStyle] = itemStyle })
         let cancelDefaultsRateLimit = settings.$rateLimit.sink(receiveValue: { limit in Defaults[.rateLimit] = limit })
         let cancelDefaultsLowRateAction = settings.$lowRateAction.sink(receiveValue: { action in Defaults[.lowRateAction] = action })
         
@@ -56,7 +56,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             cancelLaunchAtLogin.cancel()
             cancelUpdateTxRate.cancel()
             
-            cancelDefaultsShowTxRate.cancel()
+            cancelDefaultsItemStyle.cancel()
             cancelDefaultsRateLimit.cancel()
             cancelDefaultsLowRateAction.cancel()
         })

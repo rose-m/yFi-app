@@ -10,7 +10,10 @@
 "alertView.label.reconnected"="Reconnected";
 "alertView.label.failed"="Problems persist";
 "alertView.label.issues"="WiFi rate dropped";
-"settingsView.label.showTxRate"="Show TX Rate";
+"settingsView.label.itemStyle"="Item Style:";
+"settingsView.label.itemStyleOnlyIcon"="Only Icon";
+"settingsView.label.itemStyleOnlyTxRate"="Only TX Rate";
+"settingsView.label.itemStyleIconAndTxRate"="Icon and TX Rate";
 "settingsView.label.limitLabel"="Limit:";
 "settingsView.label.limit"="Limit";
 "settingsView.label.currentRate"="Current:";
