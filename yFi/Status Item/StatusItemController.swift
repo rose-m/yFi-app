@@ -3,7 +3,7 @@
 //  yFi
 //
 //  Created by Michael Rose on 14.05.20.
-//  Copyright © 2020 Coderose. All rights reserved.
+//  Copyright © 2020-2023 Coderose. All rights reserved.
 //
 
 import Cocoa
@@ -13,7 +13,7 @@ import SwiftUI
 
 class StatusItemController {
     
-    private let statusItem = NSStatusBar.system.statusItem(withLength: 70)
+    private let statusItem = NSStatusBar.system.statusItem(withLength: 50)
     
     private let settingsPopover = NSPopover()
     private var settingsView: SettingsView!
@@ -82,7 +82,7 @@ class StatusItemController {
         alertPopover.behavior = .transient
         alertPopover.contentSize = NSSize(width: AlertView.WIDTH,
                                           height: AlertView.HEIGHT)
-        alertPopover.appearance = NSAppearance(named: NSAppearance.Name.vibrantDark)
+        //alertPopover.appearance = NSAppearance(named: NSAppearance.Name.)
         alertPopover.contentViewController = NSHostingController(rootView: alertView)
     }
     
@@ -128,10 +128,10 @@ class StatusItemController {
             let imagePosition: NSControl.ImagePosition!
             
             if self.itemStyle == .onlyTxRate {
-                itemLength = 40
+                itemLength = 30
                 imagePosition = .noImage
             } else {
-                itemLength = 70
+                itemLength = 55
                 imagePosition = .imageLeft
             }
             

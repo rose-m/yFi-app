@@ -3,20 +3,20 @@
 //  yFi
 //
 //  Created by Michael Rose on 10.05.20.
-//  Copyright © 2020 Coderose. All rights reserved.
+//  Copyright © 2020-2023 Coderose. All rights reserved.
 //
 
 import Foundation
 import Combine
 import Defaults
 
-enum StatusBarItemStyle: String, Codable {
+enum StatusBarItemStyle: String, Defaults.Serializable, Codable {
     case onlyIcon = "onlyIcon"
     case onlyTxRate = "onlyTxRate"
     case iconAndTxRate = "iconAndTxRate"
 }
 
-enum LowRateAction: String, Codable {
+enum LowRateAction: String, Defaults.Serializable, Codable {
     case notify = "notify"
     case reconnect = "reconnect"
     case ignore = "ignore"

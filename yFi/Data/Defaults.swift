@@ -3,7 +3,7 @@
 //  yFi
 //
 //  Created by Michael Rose on 21.05.20.
-//  Copyright © 2020 Coderose. All rights reserved.
+//  Copyright © 2020-2023 Coderose. All rights reserved.
 //
 
 import Foundation

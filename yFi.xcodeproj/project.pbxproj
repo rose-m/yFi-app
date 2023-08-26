@@ -3,10 +3,12 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 53;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2E73AA412A99D89C0069B428 /* LaunchAtLogin in Frameworks */ = {isa = PBXBuildFile; productRef = 2E73AA402A99D89C0069B428 /* LaunchAtLogin */; };
+		2E73AA442A99D8D60069B428 /* Defaults in Frameworks */ = {isa = PBXBuildFile; productRef = 2E73AA432A99D8D60069B428 /* Defaults */; };
 		5A0DA2372471623500A1C262 /* AlertViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A0DA2362471623500A1C262 /* AlertViewModelTest.swift */; };
 		5A0DA2392471641C00A1C262 /* AlertViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A0DA2382471641C00A1C262 /* AlertViewModel.swift */; };
 		5A13CF0C24712BE600A19F18 /* AlertingControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A13CF0B24712BE600A19F18 /* AlertingControllerTests.swift */; };
@@ -23,9 +25,7 @@
 		5A6C0E4B246831BF0021828A /* SettingsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A6C0E4A246831BF0021828A /* SettingsModel.swift */; };
 		5AC4E64F2466EF47004E7E1A /* WifiController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AC4E64E2466EF47004E7E1A /* WifiController.swift */; };
 		5ADE85F82471740400A512AF /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5ADE85FA2471740400A512AF /* Localizable.strings */; };
-		5AEC9CA52472F86800CD66D8 /* LaunchAtLogin.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5AEC9CA42472F86800CD66D8 /* LaunchAtLogin.framework */; };
 		5AF404EB247676E7002DAE7D /* Defaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF404EA247676E7002DAE7D /* Defaults.swift */; };
-		5AF404ED2476794E002DAE7D /* Defaults.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5AF404EC2476794E002DAE7D /* Defaults.framework */; };
 		5AF8F06C246DCC2500C2B702 /* AlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF8F06B246DCC2500C2B702 /* AlertView.swift */; };
 /* End PBXBuildFile section */
 
@@ -73,9 +73,7 @@
 		5ADE85F92471740400A512AF /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		5ADE85FB247175AA00A512AF /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Main.strings; sourceTree = "<group>"; };
 		5ADE85FC247175AA00A512AF /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
-		5AEC9CA42472F86800CD66D8 /* LaunchAtLogin.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LaunchAtLogin.framework; path = Carthage/Build/Mac/LaunchAtLogin.framework; sourceTree = "<group>"; };
 		5AF404EA247676E7002DAE7D /* Defaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Defaults.swift; sourceTree = "<group>"; };
-		5AF404EC2476794E002DAE7D /* Defaults.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Defaults.framework; path = Carthage/Build/Mac/Defaults.framework; sourceTree = "<group>"; };
 		5AF8F06B246DCC2500C2B702 /* AlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -84,8 +82,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5AF404ED2476794E002DAE7D /* Defaults.framework in Frameworks */,
-				5AEC9CA52472F86800CD66D8 /* LaunchAtLogin.framework in Frameworks */,
+				2E73AA442A99D8D60069B428 /* Defaults in Frameworks */,
+				2E73AA412A99D89C0069B428 /* LaunchAtLogin in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -114,8 +112,6 @@
 				5A2AF7292466E495007AAE5D /* yFiTests */,
 				5A2AF7342466E495007AAE5D /* yFiUITests */,
 				5A2AF7122466E492007AAE5D /* Products */,
-				5AF404EC2476794E002DAE7D /* Defaults.framework */,
-				5AEC9CA42472F86800CD66D8 /* LaunchAtLogin.framework */,
 			);
 			sourceTree = "<group>";
 		};
@@ -222,14 +218,16 @@
 				5A2AF70D2466E492007AAE5D /* Sources */,
 				5A2AF70E2466E492007AAE5D /* Frameworks */,
 				5A2AF70F2466E492007AAE5D /* Resources */,
-				5AEC9CA62472F88F00CD66D8 /* Embed Frameworks */,
-				5AEC9CA72472F90200CD66D8 /* Copy LaunchAtLogin Helper */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
 			name = yFi;
+			packageProductDependencies = (
+				2E73AA402A99D89C0069B428 /* LaunchAtLogin */,
+				2E73AA432A99D8D60069B428 /* Defaults */,
+			);
 			productName = yFi;
 			productReference = 5A2AF7112466E492007AAE5D /* yFi.app */;
 			productType = "com.apple.product-type.application";
@@ -276,8 +274,9 @@
 		5A2AF7092466E492007AAE5D /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				BuildIndependentTargetsInParallel = YES;
 				LastSwiftUpdateCheck = 1140;
-				LastUpgradeCheck = 1140;
+				LastUpgradeCheck = 1430;
 				ORGANIZATIONNAME = Coderose;
 				TargetAttributes = {
 					5A2AF7102466E492007AAE5D = {
@@ -303,6 +302,10 @@
 				de,
 			);
 			mainGroup = 5A2AF7082466E492007AAE5D;
+			packageReferences = (
+				2E73AA3F2A99D89C0069B428 /* XCRemoteSwiftPackageReference "LaunchAtLogin" */,
+				2E73AA422A99D8D60069B428 /* XCRemoteSwiftPackageReference "Defaults" */,
+			);
 			productRefGroup = 5A2AF7122466E492007AAE5D /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -341,49 +344,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		5AEC9CA62472F88F00CD66D8 /* Embed Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"$(SRCROOT)/Carthage/Build/Mac/LaunchAtLogin.framework",
-				"$(SRCROOT)/Carthage/Build/Mac/Defaults.framework",
-			);
-			name = "Embed Frameworks";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/LaunchAtLogin.framework",
-				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/Defaults.framework",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "/usr/local/bin/carthage copy-frameworks\n";
-		};
-		5AEC9CA72472F90200CD66D8 /* Copy LaunchAtLogin Helper */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			name = "Copy LaunchAtLogin Helper";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "${PROJECT_DIR}/Carthage/Build/Mac/LaunchAtLogin.framework/Resources/copy-helper.sh\n";
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		5A2AF70D2466E492007AAE5D /* Sources */ = {
@@ -485,6 +445,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -492,6 +453,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -546,6 +508,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -553,6 +516,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -581,21 +545,20 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"yFi/Preview Content\"";
 				DEVELOPMENT_TEAM = L2X96F9T8M;
+				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/Mac",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = yFi/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
-				MARKETING_VERSION = 1.1;
+				MARKETING_VERSION = 1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = io.coderose.apps.yfi;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -611,21 +574,20 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"yFi/Preview Content\"";
 				DEVELOPMENT_TEAM = L2X96F9T8M;
+				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/Mac",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = yFi/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
-				MARKETING_VERSION = 1.1;
+				MARKETING_VERSION = 1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = io.coderose.apps.yfi;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -640,6 +602,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
+				DEAD_CODE_STRIPPING = YES;
 				INFOPLIST_FILE = yFiTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -661,6 +624,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
+				DEAD_CODE_STRIPPING = YES;
 				INFOPLIST_FILE = yFiTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -681,6 +645,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
+				DEAD_CODE_STRIPPING = YES;
 				INFOPLIST_FILE = yFiUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -700,6 +665,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
+				DEAD_CODE_STRIPPING = YES;
 				INFOPLIST_FILE = yFiUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -753,6 +719,38 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		2E73AA3F2A99D89C0069B428 /* XCRemoteSwiftPackageReference "LaunchAtLogin" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/sindresorhus/LaunchAtLogin";
+			requirement = {
+				kind = exactVersion;
+				version = 5.0.0;
+			};
+		};
+		2E73AA422A99D8D60069B428 /* XCRemoteSwiftPackageReference "Defaults" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/sindresorhus/Defaults";
+			requirement = {
+				kind = exactVersion;
+				version = 7.2.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		2E73AA402A99D89C0069B428 /* LaunchAtLogin */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2E73AA3F2A99D89C0069B428 /* XCRemoteSwiftPackageReference "LaunchAtLogin" */;
+			productName = LaunchAtLogin;
+		};
+		2E73AA432A99D8D60069B428 /* Defaults */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2E73AA422A99D8D60069B428 /* XCRemoteSwiftPackageReference "Defaults" */;
+			productName = Defaults;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 5A2AF7092466E492007AAE5D /* Project object */;
 }
